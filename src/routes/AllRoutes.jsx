@@ -1,16 +1,18 @@
 import { Route, Routes } from "react-router-dom";
 import Home from "./Home/Home";
 import Login from "./Login/Login";
-import Pricing from "./Pricing/Pricing";
 import Signup from "./Signup/Signup";
+
+import SingleProduct from "./Wellness/SingleProductPage/SingleProduct";
 
 function AllRoutes() {
    return (
       <Routes>
-         <Route path="/" element={<Home />} />
-         <Route path="/pricing" element={<Pricing />} />
+         <Route path="/" element={<Home/>} />
          <Route path="/login" element={<Login />} />
          <Route path="/signup" element={<Signup />} />
+         <Route path="/sp" element={<SingleProduct/>} />
+       
       </Routes>
    );
 }
