@@ -1,6 +1,6 @@
 import { Container, Text } from "@chakra-ui/react";
 
-function Home() {
+function Cart() {
    return (
       <Container
          minH={"100vh"}
@@ -10,9 +10,9 @@ function Home() {
          align={"center"}
          bg={"#f3f6fb"}
       >
-         <Text p={7}>home page!</Text>
+         <Text p={7}>Cart page!</Text>
       </Container>
    );
 }
 
-export default Home;
+export default Cart;

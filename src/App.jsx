@@ -1,12 +1,16 @@
-import { useState } from "react";
+import { Container } from "@chakra-ui/react";
 import "./App.css";
+import Footer from "./components/Footer/Footer";
+import Navbar from "./components/Navbar/Navbar";
 import AllRoutes from "./routes/AllRoutes";
 
 function App() {
    return (
-      <div className="App">
+      <Container maxW={"container"} p={0} m={0}>
+         <Navbar />
          <AllRoutes />
-      </div>
+         <Footer />
+      </Container>
    );
 }
 
