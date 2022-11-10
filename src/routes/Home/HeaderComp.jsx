@@ -22,7 +22,7 @@ function HeaderComp() {
             <Text>Medicine</Text>
             <MdArrowDropDown size={20} style={{ marginTop: "3px" }} />
          </HStack>
-         <HStack spacing={2} cursor={"pointer"} as={NavLink} to={"/welness"}>
+         <HStack spacing={2} cursor={"pointer"} as={NavLink} to={"/wellness"}>
             <Image src={wellness_logo} boxSize={{ md: 30, lg: 39 }} />
             <Text>Wellness</Text>
          </HStack>
