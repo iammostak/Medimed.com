@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import Cart from "./Cart/Cart";
 import Home from "./Home/Home";
 import Login from "./Login/Login";
-import Welness from "./Welness/Welness";
+import Wellness from "./Wellness/Wellness";
 
 function AllRoutes() {
    return (
@@ -10,7 +10,7 @@ function AllRoutes() {
          <Route path="/" element={<Home />} />
          <Route path="/login" element={<Login />} />
          <Route path="/cart" element={<Cart />} />
-         <Route path="/welness" element={<Welness/>}/>
+         <Route path="/wellness" element={<Wellness/>}/>
       </Routes>
    );
 }
