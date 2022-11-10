@@ -1,0 +1,72 @@
+{
+   "categoryArr": [
+      "COVID Essentials",
+      "Diabetes",
+      "Eyewear",
+      "Ayush",
+      "Ayurveda",
+      "Homeopathy",
+      "Fitness",
+      "Mom & Baby",
+      "Devices",
+      "Surgical",
+      "Sexual Wellness",
+      "Treatments"
+   ],
+   "dealArr": [
+      {
+         "id": 1,
+         "img": "https://www.netmeds.com/assets/gloryweb/images/icons/Wellnessnew.svg",
+         "heading": "Order Medicine",
+         "deal": "Save Upto 25% off"
+      },
+      {
+         "id": 2,
+         "img": "https://www.netmeds.com/assets/gloryweb/images/icons/Beautynew.svg",
+         "heading": "Beauty",
+         "deal": "Save Upto 40% off"
+      },
+      {
+         "id": 3,
+         "img": "https://www.netmeds.com/assets/gloryweb/images/icons/ordermedicinnew.svg",
+         "heading": "Wellness",
+         "deal": "Upto 80% off"
+      }
+   ],
+   "slides": [
+      {
+         "id": 1,
+         "img": "https://www.netmeds.com/images/cms/aw_rbslider/slides/1666362102_Home_Bannernmsnew.jpg"
+      },
+      {
+         "id": 2,
+         "img": "https://www.netmeds.com/images/cms/aw_rbslider/slides/1666362146_Home_Bannernms20.jpg"
+      },
+      {
+         "id": 3,
+         "img": "https://www.netmeds.com/images/cms/aw_rbslider/slides/1667832066_Web_Home_Bannercabbb.jpg"
+      },
+      {
+         "id": 4,
+         "img": "https://www.netmeds.com/images/cms/aw_rbslider/slides/1667916534_Web_Home_Banner_Keerthivdv.jpg"
+      },
+      {
+         "id": 5,
+         "img": "https://www.netmeds.com/images/cms/aw_rbslider/slides/1666355540_Home_Bannercold.jpg"
+      }
+   ],
+   "offerArr": [
+      {
+         "id": 1,
+         "img": "https://www.netmeds.com/images/cms/offers/1657030565_Simpl_Icon.png",
+         "heading": "Get up to Rs. 1000 Simpl Cashback* (5%)!..",
+         "description": "Get up to Rs. 1000 Simpl Cashback* (5%) on your FIRST-EVER payment via Simpl for ANY purchase* of AN.."
+      },
+      {
+         "id": 2,
+         "img": "https://www.netmeds.com/images/cms/offers/1654235738_Icon_256x256.png",
+         "heading": "Use Pay with Rewards, Get max. Rs. 1000 Cashback!..",
+         "description": "Get assured cashback of max. Rs. 1000, when you pay using the “Pay with Rewards” payment option .."
+      }
+   ]
+}
