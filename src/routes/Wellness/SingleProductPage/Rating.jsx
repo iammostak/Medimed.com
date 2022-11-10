@@ -2,7 +2,7 @@ import { Box } from "@chakra-ui/react";
 import styles from "./Rating.module.css"
 export default function Rating(){
 
-return <Box className={styles.rate}  >
+return <Box className={styles.rate} w={["30%","30%",'100%',"100%"]}   >
          <input type="radio" id="star5" name="rate" value="5" />
         <label htmlFor="star5" title="text">5 stars</label>
         <input type="radio" id="star4" name="rate" value="4" />
