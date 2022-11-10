@@ -12,13 +12,14 @@ import PhoneInput from "react-phone-number-input";
 import { FaFacebookSquare } from "react-icons/fa"
 // import * as dotenv from 'dotenv'
 // dotenv.config()
+// import Redis from "ioredis";
+// const redis = new Redis();
 import RightConditionRightCompo from "./RightCompoRightCondition";
 import { useUserAuth } from "./Context";
+import axios from "axios";
 function LoginRightCompo() {
-
     const { setupRecaptcha } = useUserAuth();
     const [phnumber, setphnumber] = useState("+91");
-
     const [result, setresult] = useState()
     const [bool, setbool] = useState(true)
     const getOtp = async () => {
@@ -43,7 +44,16 @@ function LoginRightCompo() {
             alert(error.message)
         }
     }
-    console.log(phnumber);
+    const googleAuth = () => {
+        // const email = redis.get("email").then(res => res)
+        // console.log(email);
+        // const data = axios.get("http://localhost:8080/auth/google/callback").then(res => console.log(res)).catch(res => console.log(res))
+        // window.open(
+        //     "http://localhost:8080/auth/google",
+        //     "_self"
+        // );
+    };
+
     return (
         <>
             {
@@ -80,7 +90,7 @@ function LoginRightCompo() {
 
                             <Button
                                 size={"md"}
-                                // onClick={handleGoogleSignIn}
+                                onClick={googleAuth}
                                 bg={"white"}
                                 border={"1px solid grey"}
                                 w={"50%"}
