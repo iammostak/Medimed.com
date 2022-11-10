@@ -1,6 +1,7 @@
 import { Box, Flex, Heading, Text } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react'
 import CartCard from './CartCard';
+import PaymentDetails from './paymentDetails/PaymentDetails';
 
 const cartData=[
    {
@@ -49,18 +50,18 @@ function Cart() {
 
     return (
 
-        <Flex gap={8} w="70%" margin="auto" marginTop={10}>
+        <Box display={["blok","blok","blok","flex","flex"]} gap={8} w="90%" margin="auto" marginTop={10}>
 
 
-            <Box>
+           <PaymentDetails/>
+            <Box w="100%" border={'1px solid red'}>
                 <Heading marginBottom={10}>Order Summary</Heading>
               <Text>PRODUCTS</Text>
                {cartData.length !== 0 ? <Box>
                     {cartData.map((item) =><CartCard key={item.id} data={item} deleteCartItem={deleteCartItem} />)}
                </Box> : null}
             </Box>
-           
-        </Flex>
+        </Box>
     )
 }
 

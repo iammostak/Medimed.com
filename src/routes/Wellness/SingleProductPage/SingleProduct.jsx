@@ -14,9 +14,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { BsFillHeartFill, BsArrowRightCircleFill } from "react-icons/bs";
 import { useParams } from "react-router-dom";
-import MainImg from "./MainImg";
-import MobileView from "./mobile";
-import Rating from "./Rating";
+import BigScreen from "./bigscreen";
+import MainImg from "./carousel/MainImg";
+import MobileView from "./mobileScreen";
+import Rating from "./rating/Rating";
+import ReviewModal from "./reviewModal";
 const mainColor = "rgb(50,174,177)";
 
 const getData=async(id)=>{
@@ -43,137 +45,18 @@ console.log(id)
 },[id])
 
   return (
-    <Box w="80%" m="auto"  bg="#f3f6fb" p="1%" >
+    <Box  m="auto"  bg="#f3f6fb" >
       
-      <br /><br />
+ 
       <MobileView singleData={singleData} />
       <Box w="95%" m="auto"  >
-        <Flex m="auto"  >
-          {/* /left box */}
-          <Box  w="50%" bg="white" display={["none","none","unset","unset","unset"]} >
-            <MainImg url={singleData?.url} off={singleData?.off} />
-          </Box>
-
-          {/* Right box */}
-          <Box  w="50%" bg="white" p="2%"  display={["none","none","unset","unset","unset"]} >
-            {/* 1st right */}
-            <Flex
-              flexDirection={"column"}
-              alignItems={"flex-start  "}
-              borderBottom="1px solid gray "
-              lineHeight={2}
-            >
-              {/* //  Product Title */}
-              <Text fontSize={["7px","10px","15px","20px"]}>
-                {singleData?.title}
-              </Text>
-              <Flex  gap={"10px"}  w="100%" >
-                {/* <Flex justifyContent={"center"} alignItems="center" > */}
-
-                {/* </Flex> */}
-                <Flex justifyContent={"center"} alignItems={"center"} bg={"rgb(246,246,247)"}  minH={["25px"]} fontSize={["7px","10px","15px","20px","20px"]} >Personal Care</Flex>
-                <Flex  justifyContent={"center"} alignItems={"center"} bg={"rgb(246,246,247)"} minH={["25px"]} fontSize={["7px","10px","15px","20px","20px"]}  >
-                  Face Personel Care
-                </Flex>
-              </Flex>
-              <br />
-              <Box>
-<BsFillHeartFill color={"rgb(199,200,208)"} />
-              </Box>
-              <br />
-               </Flex>
-            <br />
-      
-            {/* 2nd */}
-            <Flex
-              flexDirection={"column"}
-              alignItems={"flex-start  "}
-              borderBottom="1px solid gray "
-              lineHeight={[1,1,1,2]}
-            >
-              <Text color={"rgb(239,66,129)"}
-                fontWeight="bold"
-                fontSize={["12px","12px","15px","20px","20px"]} >Best Price* ₹ {singleData?.Fprice}</Text>
-                 <Flex gap="2%" w={'100%'} fontSize={["10px","10px","15px","20px","20px"]} >
-                 M.R.P.:<del  >Rs.{singleData?.price}</del>{" "}
-              </Flex>
-                 
-                 <Text fontSize={["12px","12px","15px","20px","20px"]} color={"green"}>{singleData?.off} (Inclusive of all taxes)</Text>
-              <Text fontSize={["12px","12px","15px","20px","20px"]} >* {singleData?.mkt}</Text>
-              <Text fontSize={["12px","12px","15px","20px","20px"]}>* Country of Origin: India</Text>
-              <Text fontSize={["12px","12px","15px","20px","20px"]}>
-                * Delivery charges if applicable will be applied at checkout
-              </Text>
-              <br />
-              <Button fontSize={["10px","10px","15px","20px","20px"]} bg={'rgb(36,174,177)'} color="white" >Add to Cart</Button>
-              <br />
-             
-            </Flex>
-
-            <br />
-           
-            {/* 3rd */}
-            <Flex
-              flexDirection={"column"}
-              alignItems={"flex-start  "}
-              lineHeight={1}
-            >
-              <Text fontSize={["12px","12px","15px","20px","20px"]} >Check Availability & Expiry</Text><br /> 
-              <Flex borderBottom="5px solid rgb(36,174,177)" justifyContent={"space-between"} alignItems="center"  >
-                <Text fontSize={["15px","15px","20px","25px","25px"]} color={"rgb(36,174,177)"}>
-                  PINCODE:
-                </Text>
-                <Input color="rgb(36,174,177)" fontSize={["12px","12px","15px","20px","20px"]} border={"none"} variant='unstyled' />
-                <BsArrowRightCircleFill
-                  color="rgb(36,174,177)"
-                  fontSize={"30px"}
-                />
-              </Flex>
-<br />
-              <Text color={"rgb(111,115,136)"} fontSize={["20px","20px","25px","30px","30px"]}>
-                OFFERS APPLICABLE
-              </Text>
-              <br />
-              <Flex
-                justifyContent={"space-between"}
-                w="100%"
-                bg="rgb(243,243,243)"
-                    borderRadius={"2rem"}
-                p="1%"
-                alignItems={"center"}
-              >
-                <Flex gap="1%" alignItems={"center"} w="60%" >
-                  <Box>
-                    {" "}
-                    <Img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5Ojf/2wBDAQoKCg0MDRoPDxo3JR8lNzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzf/wAARCAAqADIDASIAAhEBAxEB/8QAGQAAAwEBAQAAAAAAAAAAAAAAAAMFBAIH/8QAKxAAAQMDAQcEAgMAAAAAAAAAAQACAwQFERITITFBUWFxBiIykRShIzNC/8QAFwEBAQEBAAAAAAAAAAAAAAAAAgMABP/EACURAAIBAgUDBQAAAAAAAAAAAAABAgMREhMhIjEUQVEjgZGx4f/aAAwDAQACEQMRAD8A9pha0u3gHcnFjAMlrQB2SoPmfCg3WWe7XsWmkrnQ07IS6d0IydWcaSeW7H2lFXJVamWuLt8Gif1PZ2NOweamUO0iKKMlzj2yMFEHqezSNYJZDBKTpMckRy098DC2UUVroZIaGB1O2ojZhrSRtMcfO/JK7rqKhr2T0szY9pIwa9ONYGdx68R+ktngl67V1JX8W/TZoYf8t+kiRga7AG5Q7XNLab261Vda6WB8QNO6bjqzjSCr0/zHhGUbFaVTMXFmuReB0CEIRKjIPmfCh+kw0Vl52P8AT+V7SR7s7857cMK5B8z4UG6Qy2q+Nu1JRPlgdC5tQIeJOc5I+vpOGqaOavtlGp2T+9BV1tj6WvZNFI2V01UJ4acRjaOkA4auTBxPZFquT6S4ugmibI6epMMs5kG0fIBx08mDgFco62hrmwVUTojJIz+PVgPA5jry/S4rJbXQvmrpm04qI26nOAbtOmOvQJYr6NEspJ5kJWXJM9WY/Ns+1xsfyfdpPvJ3Yx245V2f5jwoFqinu18N2q6J0NOyENgbMcnVnOoDluz9q/P8x4RnpZFaG6UqnZvT2FoQhA6TuEgO3nG5O1NPMfazIWMTZ/S9nka8xRGCRx1CSOQ5aewJwEQ+mLQwNM0ZqJdRc6WWQlzyeuNxVJCWOXkh01G98K+DSHMAwC0AJMjtTsjguEIlwQhCxj//2Q==" />
-                  </Box>
-                  <Flex
-                    flexDirection={"column"}
-                    alignItems={"flex-start"}
-                    justifyContent="center"
-                  >
-                    <Text fontSize={["12px","12px","15px","20px","20px"]}>Default Discount</Text>
-                    <Text color={"green"} fontWeight="bold" fontSize={["10px","10px","12px","15px","15px"]} >
-                      You get {singleData?.off} OFF on this product
-                    </Text>
-                  </Flex>
-                </Flex>
-                
-                <Flex w="40%" >
-                  <Text fontSize={["10px","12px","15px","20px","20px"]} color="rgb(239,155,189)">Offer Appiled</Text>
-                </Flex>
-              </Flex>
-
-              <br />
-              <br />
-            </Flex>
-          </Box>
-        </Flex>
+        <BigScreen singleData={singleData}  />
         {/* 1ts step end here */}
         <br />
         <br />
         <br />
         {/* second step start here  */}
+        <Box>
         <Flex
           flexDirection={"column"}
           justifyContent="center"
@@ -237,15 +120,15 @@ console.log(id)
               justifyContent="space-between"
               borderLeft={"1px solid gray"}
             >
-              <Box>
+              {/* <Box>
                 <img
                   src="https://www.netmeds.com/assets/gloryweb/icons/rate-icon.png"
                   alt="review logo"
                 />
               </Box>
-              <Text fontWeight={"bold"}>Rate Product</Text>
-              {/* <Rating /> */}
-              
+              <Text fontWeight={"bold"}>Rate Product</Text> */}
+        
+              <ReviewModal/>
             </Flex>
           </Flex>
         </Flex>
@@ -280,6 +163,7 @@ console.log(id)
         <br />
         {/* fourth step end here / Disclaimer */}
         {/* fifth step START  here / aDD TO CART */}
+        
         <Flex
           w={"100%"}
           h="100px"
@@ -326,9 +210,12 @@ console.log(id)
               </Box> */}
             </Box>
 
-            <Button bg="rgb(36,174,177)" color="white" fontSize={['5px',"5px","15px","20px","20px"]} maxH={["20px","20px","30px","35px","40px"]}>ADD TO CART</Button>
+            <Button bg="rgb(36,174,177)" color="white" fontSize={['5px',"5px","15px","20px","20px"]} maxH={["20px","20px","30px","35px","40px"]} onClick={()=>{
+                alert("add to cart functionality is pending")
+              }}>ADD TO CART</Button>
           </Flex>
         </Flex>
+        </Box>
         <br />
         <br />
         <br />
