@@ -5,7 +5,7 @@ import { Flex, Stack, Text, Box, Button, Image, Link } from "@chakra-ui/react"
 import WellnessCarousel from "../../components/WellnessCarousel";
 
 
-function Welness() {
+function Wellness() {
    return (
       <Box bg={"#f3f6fb"}>
          <Box>Wellness Page</Box>
@@ -831,4 +831,4 @@ function Welness() {
    );
 }
 
-export default Welness;
+export default Wellness;
