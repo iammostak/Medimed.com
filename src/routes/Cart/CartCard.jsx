@@ -6,21 +6,23 @@ import { useEffect } from 'react';
 import { useState } from 'react'
 
 
-function CartCard(data) {
+function CartCard({data,handleQty}) {
+console.log(data)
 
 
+let {Fprice,date,mkt,off,price,title,url} =data.productId
     return (
         <Box borderBottom="1px solid gray">
-            {data.data !== undefined && <Grid templateColumns='repeat(7, 1fr)'>
+            {data!== undefined && <Grid templateColumns='repeat(7, 1fr)'>
                 <GridItem  colSpan={1}>
                     <Center>
-                        <img width="100%" src={data.data.url} alt="" />
+                        <img width="100%" src={url} alt="" />
                     </Center>
                 </GridItem>
                 <GridItem padding={5} colSpan={3} border="1px solid red" >
-                    <Text fontSize={[10,10,15,15,18]}>{data.data.title}</Text>
-                    <Text fontSize="xs" as="i">{data.data.mkt}</Text>
-                    <Text h={10} marginTop={5} color="#f50271" fontSize={[10,10,15,15,18]}>RS {data.data.price} <span style={{ color: "gray", fontSize: "14px", fontWeight: "400", textDecoration: "line-through" }}>{data.data.Fprice}</span></Text>
+                    <Text fontSize={[10,10,15,15,18]}>{title}</Text>
+                    <Text fontSize="xs" as="i">{mkt}</Text>
+                    <Text h={10} marginTop={5} color="#f50271" fontSize={[10,10,15,15,18]}>RS {price} <span style={{ color: "gray", fontSize: "14px", fontWeight: "400", textDecoration: "line-through" }}>{Fprice}</span></Text>
 
 
                     <Text fontSize={[10,10,15,15,18]} color="gray">Delivery between Jul 23 6PM-Jul 24 10PM</Text>
@@ -38,13 +40,14 @@ function CartCard(data) {
                             <Flex w="70%" >
 
                             <Button fontSize={[10,10,15,15,18]} 
-                            // disabled={data.data.qty === 1} onClick={() => DecreaseCartQty(data.data.id)}
+                            // disabled={data.data.qty === 1}
+                             onClick={() =>handleQty({id:data.productId,type:"dec"})}
                             >-</Button>
 
-                            <Center fontSize={20} fontWeight="bold" w={10}>{data.data.qty}</Center>
+                            <Center fontSize={20} fontWeight="bold" w={10}>{data.quantity}</Center>
 
                             <Button fontSize={[10,10,15,15,18]}
-                            // onClick={() => IncreaseCartQty(data.data.id)} 
+                            onClick={()=>handleQty({id:data.productId,type:"inc"})} 
                             >+</Button>
                     
                             </Flex>

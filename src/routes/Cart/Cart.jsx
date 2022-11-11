@@ -1,68 +1,112 @@
-import { Box, Flex, Heading, Text } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react'
-import CartCard from './CartCard';
-import PaymentDetails from './paymentDetails/PaymentDetails';
+import { Box, Flex, Heading, Text } from "@chakra-ui/react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import CartCard from "./CartCard";
+import PaymentDetails from "./paymentDetails/PaymentDetails";
 
-const cartData=[
-   {
-   "id": 101,
-   "url": "https://www.netmeds.com/images/product-v1/150x150/812809/pure_nutrition_progut_plus_for_healthy_digestion_veg_capsules_60_s_0.jpg",
-   "off": "30% OFF",
-   "title": "Pure Nutrition Progut(For Healthy Digestion)Capsules 60's",
-   "mkt": "Mkt: Herbs Nutriproducts Pvt. Ltd.",
-   "price": "1,049.30",
-   "Fprice": " 1,499.00"
-   },
-   {
-   "id": 102,
-   "url": "https://www.netmeds.com/images/product-v1/150x150/821307/kapiva_wheat_grass_juice_1_ltr_0_2.jpg",
-   "off": "14% OFF",
-   "title": "Kapiva Wheat Grass Juice 1 ltr",
-   "mkt": "Mkt: Adret Retail Pvt Ltd, (Kapiva)",
-   "price": "429.14",
-   "Fprice": " 499.00"
-   }]
 
-   const deleteCartItem=[
-      {
-         "id": 104,
-         "url": "https://www.netmeds.com/images/product-v1/150x150/15921/dabur_shilajit_gold_capsule_10s_0_1.jpg",
-         "off": "10% OFF",
-         "title": "Dabur Shilajit Gold Capsule 10's",
-         "mkt": "Mkt: Dabur India Ltd",
-         "price": "229.00",
-         "Fprice": "255.00"
-         },
-   ]
+
+
+
+const getCartData = async () => {
+  let data = await axios.get("https://medimedcom-backend-production.up.railway.app/carts", {
+    headers: { userid: "636d1da8f6cde62d954b2473" },
+  });
+  return data;
+};
+
 function Cart() {
-
-    const TotalPrice = cartData.reduce((acc, el) => (acc + Number(el.price.split("").filter((el) => el !== ",").join("")) * el.qty), 0)
-
-    const fPrice = TotalPrice.toFixed(2);
-
-
-
-    const FullPrice = cartData.reduce((acc, el) => (acc + Number(el.Fprice.split("").filter((el) => el !== ",").join("")) * el.qty), 0)
-    const PwithoutDis = FullPrice.toFixed(2);
-
-
-
-
-    return (
-
-        <Box display={["blok","blok","blok","flex","flex"]} gap={8} w="90%" margin="auto" marginTop={10}>
-
-
-           <PaymentDetails/>
-            <Box w="100%" border={'1px solid red'}>
-                <Heading marginBottom={10}>Order Summary</Heading>
-              <Text>PRODUCTS</Text>
-               {cartData.length !== 0 ? <Box>
-                    {cartData.map((item) =><CartCard key={item.id} data={item} deleteCartItem={deleteCartItem} />)}
-               </Box> : null}
-            </Box>
-        </Box>
+    const[cartData,setCartData]=useState([])
+  const TotalPrice = cartData?.reduce(
+    (acc, el) =>
+      acc +
+      Number(
+        el.productId.price
+       
+      ) *
+        el.quantity,
+    0
     )
+    const finalePrice = TotalPrice.toFixed(); 
+  const FullPrice = cartData.reduce(
+    (acc, el) =>
+      acc +
+      Number(
+        el.productId.Fprice
+        
+      ) *
+        el.quantity,
+    0
+  );
+  const fullMrp = FullPrice.toFixed(2);
+
+
+
+const handleQty=async({id,type})=>{
+    
+try{
+
+    let d=await axios.post("https://medimedcom-backend-production.up.railway.app/carts/update",{
+        type:type,
+        productId:id._id
+    },
+    {
+        headers: { userid: "636d1da8f6cde62d954b2473" }
+    })
+    console.log(d)
+}catch(e){
+    console.log(e)
+}
+getCartData()
+.then((res) => {
+  setCartData([...res.data])
+  // console.log(res.data);
+})
+.catch((e) => {
+  // console.log(e);
+})
+alert("success")
 }
 
-export default Cart
+
+  useEffect(() => {
+ 
+    getCartData()
+      .then((res) => {
+        setCartData([...res.data])
+        // console.log(res.data);
+      })
+      .catch((e) => {
+        // console.log(e);
+      });console.log(TotalPrice)
+    }, []);
+   
+    return (
+    <Box
+      display={["blok", "blok", "blok", "flex", "flex"]}
+      gap={8}
+      w="90%"
+      margin="auto"
+      marginTop={10}
+    >
+      {cartData&&<PaymentDetails price={fullMrp} total={finalePrice}   />}
+      <Box w="100%" border={"1px solid red"}>
+        <Heading marginBottom={10}>Order Summary</Heading>
+        <Text>PRODUCTS</Text>
+        {cartData.length !== 0 ? (
+          <Box>
+            {cartData?.map((item) => (
+              <CartCard
+                key={item._id}
+                data={item}
+                handleQty={handleQty}
+              />
+            ))}
+          </Box>
+        ) : null}
+      </Box>
+    </Box>
+  );
+}
+
+export default Cart;
