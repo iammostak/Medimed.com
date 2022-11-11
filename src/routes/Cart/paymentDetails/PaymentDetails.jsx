@@ -2,7 +2,7 @@ import { Box, Button, Center, Flex, Grid, GridItem, Text } from '@chakra-ui/reac
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
-function PaymentDetails({ price, total }) {
+function PaymentDetails({ price,total }) {
 
     const navigate = useNavigate()
 
@@ -13,7 +13,7 @@ function PaymentDetails({ price, total }) {
             <Text letterSpacing={1} color="gray.500" fontSize="sm" paddingBottom="20px">PAYMENT DETAILS</Text>
             <Flex justify="space-between" color="blackAlpha.700" paddingBottom="10px">
                 <Text>MRP Total</Text>
-                <Text>RS. {total}</Text>
+                <Text>RS. {price}</Text>
             </Flex>
             <Flex justify="space-between" color="blackAlpha.700" paddingBottom="10px">
                 <Text>Netmeds Discount</Text>
@@ -21,7 +21,7 @@ function PaymentDetails({ price, total }) {
             </Flex>
             <Flex justify="space-between" fontWeight="bold" paddingBottom="10px">
                 <Text>Total Amount *</Text>
-                <Text>{price}</Text>
+                <Text>{total}</Text>
             </Flex>
             <Box marginTop={3} background="#f3f8ec" p="10px" color="#378f30"  >
                 <Text fontSize="sm" fontWeight="bold">TOTAL SAVINGS RS <span>{Discount}</span></Text>
@@ -37,7 +37,7 @@ function PaymentDetails({ price, total }) {
 
                 </GridItem>
                 <GridItem rowSpan={1} colSpan={1} >
-                    <Text fontWeight="bold"  >RS. {price}</Text>
+                    <Text fontWeight="bold"  >RS. {total}</Text>
                 </GridItem>
             </Grid>
         </Box >
