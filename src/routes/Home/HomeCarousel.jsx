@@ -73,6 +73,7 @@ function HomeCarousel() {
                boxSize={{ base: 4, md: 10 }}
                color={"white"}
                onClick={prevSlide}
+               cursor={"pointer"}
             />
             <Icon
                as={IoIosArrowForward}
@@ -82,6 +83,7 @@ function HomeCarousel() {
                boxSize={{ base: 4, md: 10 }}
                color={"white"}
                onClick={nextSlide}
+               cursor={"pointer"}
             />
             <HStack
                justify="center"

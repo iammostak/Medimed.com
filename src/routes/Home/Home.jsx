@@ -1,4 +1,5 @@
 import {
+   Box,
    Button,
    Container,
    Flex,
@@ -6,18 +7,38 @@ import {
    HStack,
    Icon,
    Image,
-   StackDivider,
    Text,
    VStack,
 } from "@chakra-ui/react";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import HomeCarousel from "./HomeCarousel";
 import DealCard from "./DealCard";
-import { categoryArr, dealArr, offerArr } from "../../../db.json";
+import {
+   categoryArr,
+   dealArr,
+   offerArr,
+   healthLibraryArr,
+   extraInfo,
+   exploreBeautyArr,
+   healthConcernsArr,
+   newOnMedimedArr,
+   topBrandArr,
+   focusArr,
+} from "../../../db.json";
 import HeaderComp from "./HeaderComp";
 import OfferCard from "./OfferCard";
 import PreviousOrder from "./PreviousOrder";
 import BeautyComp from "./BeautyComp";
+import HealthLibrary from "./HealthLibrary";
+import ExtraInfo from "./ExtraInfo";
+import ExtraContent from "./ExtraContent";
+import BGHeading from "./BGHeading";
+import ExploreBeautyCard from "./ExploreBeautyCard";
+import EasyOnlineCard from "./EasyOnlineCard";
+import RefillCard from "./RefillCard";
+import HealthConcernCard from "./HealthConcernCard";
+import TopBrandCard from "./TopBrandCard";
+import MembershipCard from "./MembershipCard";
 
 function Home() {
    return (
@@ -103,6 +124,119 @@ function Home() {
             <PreviousOrder />
             <BeautyComp />
          </Flex>
+         <BGHeading heading="New on Medimed" color="#32aeb0" height="170">
+            <Flex
+               w={"full"}
+               gap={4}
+               zIndex={1}
+               direction={{ base: "column", md: "row" }}
+            >
+               {newOnMedimedArr.map((item) => (
+                  <Box w={{ base: "100%", md: "33%" }}>
+                     <Image src={item.img} borderRadius={"lg"} />
+                  </Box>
+               ))}
+            </Flex>
+            <Heading
+               py={5}
+               w={"full"}
+               align={"left"}
+               fontSize={{ base: "xl", md: "2xl" }}
+               fontFamily={"sans-serif"}
+            >
+               Top Brands
+            </Heading>
+            <Flex
+               w={"full"}
+               pb={10}
+               zIndex={1}
+               gap={{ base: 3, lg: 6 }}
+               direction={{ base: "column", md: "row" }}
+               borderBottom={"1px solid"}
+               borderColor={"blackAlpha.200"}
+            >
+               {topBrandArr.map((item) => (
+                  <TopBrandCard key={item.id} {...item} />
+               ))}
+            </Flex>
+            <MembershipCard />
+            <Heading
+               py={5}
+               w={"full"}
+               align={"left"}
+               fontSize={{ base: "xl", md: "2xl" }}
+               fontFamily={"sans-serif"}
+            >
+               Categories in Focus
+            </Heading>
+            <Flex
+               w={"full"}
+               pb={10}
+               zIndex={1}
+               gap={{ base: 3, lg: 6 }}
+               direction={{ base: "column", md: "row" }}
+            >
+               {focusArr.map((item) => (
+                  <TopBrandCard key={item.id} {...item} />
+               ))}
+            </Flex>
+         </BGHeading>
+         <BGHeading heading="Explore Beauty" color="#ef4281" height="200">
+            <Flex
+               w={"full"}
+               pb={10}
+               zIndex={1}
+               gap={4}
+               justify={"space-between"}
+               direction={{ base: "column", md: "row" }}
+               borderBottom={"1px solid"}
+               borderColor={"blackAlpha.200"}
+            >
+               {exploreBeautyArr.map((item) => (
+                  <ExploreBeautyCard key={item.id} {...item} />
+               ))}
+            </Flex>
+            <EasyOnlineCard />
+            <RefillCard />
+            <Heading
+               py={5}
+               w={"full"}
+               align={"left"}
+               fontSize={{ base: "xl", md: "2xl" }}
+               fontFamily={"sans-serif"}
+            >
+               Health Concerns
+            </Heading>
+            <Flex
+               w={"full"}
+               pb={7}
+               gap={4}
+               zIndex={1}
+               direction={{ base: "column", md: "row" }}
+            >
+               {healthConcernsArr.map((item) => (
+                  <HealthConcernCard key={item.id} {...item} />
+               ))}
+            </Flex>
+         </BGHeading>
+         <BGHeading heading="Health Library" color="#ef4281" height="150">
+            <Flex
+               w={"full"}
+               gap={4}
+               zIndex={1}
+               direction={{ base: "column", md: "row" }}
+            >
+               {healthLibraryArr.map((item) => (
+                  <HealthLibrary key={item.id} {...item} />
+               ))}
+            </Flex>
+            <VStack px={2} pt={7} align={"stretch"}>
+               {extraInfo.map((item) => (
+                  <ExtraInfo key={item.id} {...item} />
+               ))}
+               <ExtraContent />
+            </VStack>
+         </BGHeading>
       </Container>
    );
 }
