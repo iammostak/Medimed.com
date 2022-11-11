@@ -15,9 +15,7 @@ function AllRoutes() {
          <Route path="/cart" element={<Cart />} />
          <Route path="/wellness" element={<Wellness/>}/>
          <Route path="/wellness/:id" element={<SingleProduct/>}/>
-        
          <Route path="/payment" element={<Payment/>}/>
-      
       </Routes>
    );
 }
