@@ -1,9 +1,11 @@
 
 import React from "react";
 
-import { Flex, Stack, Text, Box, Button, Image, } from "@chakra-ui/react"
+import { Flex, HStack, Stack, Text, Box, Button, Image, Grid, Spacer, } from "@chakra-ui/react"
 import WellnessCarousel from "../../components/WellnessCarousel";
 import { Link } from "react-router-dom"
+import HeaderComp from "../Home/HeaderComp";
+import { categoryArr } from "../../../db.json"
 
 
 
@@ -285,9 +287,11 @@ function Wellness() {
    ]
 
    return (
-      <Box bg={"#f3f6fb"}>
+
+      <Box marginBottom={"15px"} bg={"#f3f6fb"}>
+         <HeaderComp />
          <Box></Box>
-         <Flex marginTop={"20px"} marginLeft={"180px"} width={"70%"} justify={"center"} gap={"28px"}>
+         {/* <Flex paddingTop={"20px"} marginTop={"5px"} marginLeft={"21px"} width={"70%"} justify={"center"} gap={"28px"}>
             <Link _hover={{ color: "#151B39" }}>   <Text fontSize={"13px"} color={"#151B39"}>COVID Essentials </Text></Link>
             <Link _hover={{ color: "#151B39" }} >  <Text fontSize={"13px"} color={"#151B39"}> Diabetes
             </Text></Link>
@@ -311,7 +315,21 @@ function Wellness() {
 
 
 
-         </Flex>
+         </Flex> */}
+         <HStack
+            p={3}
+            justify={"center"}
+            spacing={{ base: 3, lg: 6 }}
+            flexWrap={"wrap"}
+            display={{ base: "none", md: "flex" }}
+         >
+            {categoryArr.map((item) => (
+               <Text fontSize={{ base: 11, lg: "sm" }} cursor={"pointer"}>
+                  {item}
+               </Text>
+            ))}
+         </HStack>
+
 
          <Box marginTop={"40px"}>  <WellnessCarousel /></Box>
 
@@ -329,12 +347,14 @@ function Wellness() {
             </Text>
          </Box>
 
-         <Box justifyContent={"center"} bg={"#F3F7FB"} display={"flex"} gap={10} p={4}>
+         <Box display={"flex"} flexWrap={"wrap"} justify={"space-evenly"} width={"100%"} gap={"20px"} border={"2px solid blue"} marginTop={"20px"}>
+         {/* border={"2px solid green"} justifyContent={"center"} bg={"#F3F7FB"} display={"flex"} gap={10} p={4} */}
             <Box
+             width={["300px", "250px", "250px", "280px"]}
                rounded={10}
                boxShadow={"rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"}
                p={4}
-               width={230}
+               //width={230}
                height={280}
                bg={"white"}
             >
@@ -342,7 +362,7 @@ function Wellness() {
                   src="https://www.netmeds.com/images/category/v1/3902/thumb/face_personal_care.jpg"
                   alt=""
                ></img>
-               <Text fontSize={14} fontWeight={500} pt={5} pl={1}>
+               <Text fontSize={14} fontWeight={500} pt={5} pl={8}>
                   Face Personal Care
                </Text>
             </Box>
@@ -350,7 +370,8 @@ function Wellness() {
                rounded={10}
                boxShadow={"rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"}
                p={4}
-               width={230}
+               width={["300px", "250px", "250px", "280px"]}
+               //width={230}
                height={280}
                bg={"white"}
             >
@@ -358,7 +379,7 @@ function Wellness() {
                   src="https://www.netmeds.com/images/category/v1/525/thumb/body_care_1.jpg"
                   alt=""
                ></img>
-               <Text fontSize={14} fontWeight={500} pt={5} pl={1}>
+               <Text marginLeft={"25px"} fontSize={14} fontWeight={500} pt={5} pl={12}>
                   Body care
                </Text>
             </Box>
@@ -366,7 +387,8 @@ function Wellness() {
                rounded={10}
                boxShadow={"rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"}
                p={0}
-               width={230}
+               width={["300px", "250px", "250px", "280px"]}
+               //width={230}
                height={280}
                bg={"white"}
             >
@@ -374,7 +396,7 @@ function Wellness() {
                   src="https://www.netmeds.com/images/category/v1/547/thumb/hair_care_2.jpg"
                   alt=""
                ></img>
-               <Text fontSize={14} fontWeight={500} pt={8} pl={1}>
+               <Text marginLeft={"25px"}  fontSize={14} fontWeight={500} pt={8} pl={12}>
                   Hair Care
                </Text>
             </Box>
@@ -382,7 +404,8 @@ function Wellness() {
                rounded={10}
                boxShadow={"rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"}
                p={3}
-               width={230}
+               width={["300px", "250px", "250px", "280px"]}
+               //width={230}
                height={280}
                bg={"white"}
             >
@@ -390,7 +413,7 @@ function Wellness() {
                   src="https://www.netmeds.com/images/category/v1/562/thumb/oral_care.jpg"
                   alt=""
                ></img>
-               <Text fontSize={14} fontWeight={500} pt={5} pl={1}>
+               <Text marginLeft={"25px"}  fontSize={14} fontWeight={500} pt={5} pl={12}>
                   Oral care
                </Text>
             </Box>
@@ -399,7 +422,8 @@ function Wellness() {
                boxShadow={"rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"}
                p={4}
                pl={8}
-               width={230}
+               width={["300px", "250px", "250px", "280px"]}
+               //width={230}
                height={280}
                bg={"white"}
             >
@@ -407,7 +431,7 @@ function Wellness() {
                   src="https://www.netmeds.com/images/category/v1/3772/thumb/home_health.jpg"
                   alt=""
                ></img>
-               <Text fontSize={14} fontWeight={500} pt={8} pl={1}>
+               <Text marginLeft={"25px"}  fontSize={14} fontWeight={500} pt={4} pl={8}>
                   Home & Health
                </Text>
             </Box>
@@ -431,28 +455,39 @@ function Wellness() {
                   UNDER-399
                </Text>
             </Box>
-            <Flex marginTop={"20px"} justifyContent={"center"} gap={"20px"}>
+            <Flex flexWrap={"wrap"} justify={"space-evenly"} width={"100%"} gap={"20px"} border={"2px solid blue"} marginTop={"20px"} >
+               {/* gridTemplateRows={['repeat(2, auto)', 'repeat(2, auto)', 'repeat(1, auto)', 'repeat(1, auto)']} gridTemplateColumns={['repeat(2, 25%)', 'repeat(2, 25%)', 'repeat(3, 25%)', 'repeat(4, 25%)']} */}
 
-               {data?.filter((el) => el.price <= 399 ? el : null).splice(0, 5).map((el) => (
-                <Link key={el.id} to={`/wellness/${el.id}`}> <Box
-                     rounded={10}
-                     boxShadow={"rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"}
-                     p={4}
-                     width={260}
-                     height={340}
-                     bg={"white"}
-                  >
-                     <img
-                        src={el.url}
-                        alt=""
-                     ></img>
-                     <Text fontSize={13} fontWeight={"bold"} pt={3} pl={1}>
-                        {el.title}
-                     </Text>
-                     <Text color={"#6F7284"} fontSize={13}  >{el.mkt}</Text>
-                     <Text fontWeight={"bold"} color={"#6F7284"} fontSize={14}  >Best Price* <Text as={"span"} fontWeight={"bold"} fontSize={"16px"} color={"#EF4281"}>Rs.{el.price}</Text></Text>
-                     <Button marginTop={"15px"} backgroundColor={"#24AEB1"} colorScheme={"twitter"}>ADD TO CART</Button>
-                  </Box></Link> 
+               {data?.filter((el) => el.price <= 399 ? el : null).splice(0, 4).map((el) => (
+                  <Link key={el.id} to={`/wellness/${el.id}`}>
+                     <Flex
+                        wrap={"wrap"}
+                        border={"2px solid green"}
+                        direction={"column"}
+                        minHeight={"400px"}
+
+                        rounded={10}
+                        boxShadow={"rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"}
+                        p={4}
+                        width={["300px", "250px", "250px", "280px"]}
+                        // height={340}
+                        bg={"white"}
+                     >
+                        <Box border={"2px solid black"} lineHeight={2} height={"80%"}>
+                           <img
+                              src={el.url}
+                              alt=""
+                           ></img>
+                           <Text fontSize={13} fontWeight={"bold"} pt={3} pl={1}>
+                              {el.title}
+                           </Text>
+                           <Text color={"#6F7284"} fontSize={13}  >{el.mkt}</Text>
+                           <Text fontWeight={"bold"} color={"#6F7284"} fontSize={14}  >Best Price* <Text as={"span"} fontWeight={"bold"} fontSize={"16px"} color={"#EF4281"}>Rs.{el.price}</Text></Text>
+                        </Box>
+
+                        <Spacer />
+                        <Flex justify={"center"} height={"10%"}><Button marginTop={"15px"} backgroundColor={"#24AEB1"} colorScheme={"twitter"}>ADD TO CART</Button></Flex>
+                     </Flex></Link>
                ))}
             </Flex>
          </Box>
@@ -473,168 +508,43 @@ function Wellness() {
                   UPTO 65% OFF
                </Text>
             </Box>
-            <Flex marginTop={"20px"} justifyContent={"center"} gap={"20px"}>
-               {data?.filter((el) => el.off <= "65%" ? el : null).splice(0, 5).map((el) => (
-                  <Link key={el.id} to={`/wellness/${el.id}`} > <Box
+            <Flex flexWrap={"wrap"} justify={"space-evenly"} width={"100%"} gap={"20px"} border={"2px solid blue"} marginTop={"20px"}>
+               {data?.filter((el) => el.off <= "65%" ? el : null).splice(0, 4).map((el) => (
+                  <Link key={el.id} to={`/wellness/${el.id}`} >
+                     <Flex
+                        wrap={"wrap"}
+                        border={"2px solid green"}
+                        direction={"column"}
+                        minHeight={"400px"}
+                        rounded={10}
+                        boxShadow={"rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"}
+                        p={4}
+                        width={["300px", "250px", "250px", "280px"]}
+                        //width={260}
+                        //height={340}
+                        bg={"white"}
 
-                     rounded={10}
-                     boxShadow={"rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"}
-                     p={4}
-                     width={260}
-                     height={340}
-                     bg={"white"}
-                  >
-                     <img
-                        src={el.url}
-                        alt=""
-                     ></img>
-                     <Text fontSize={13} fontWeight={"bold"} pt={3} pl={1}>
-                        {el.title}
-                     </Text>
-                     <Text color={"#6F7284"} fontSize={13}  >{el.mkt}</Text>
-                     <Text fontWeight={"bold"} color={"#6F7284"} fontSize={14}  >Best Price* <Text as={"span"} fontWeight={"bold"} fontSize={"16px"} color={"#EF4281"}>Rs.{el.price}</Text></Text>
-                     <Button marginTop={"15px"} backgroundColor={"#24AEB1"} colorScheme={"twitter"}>ADD TO CART</Button>
-                  </Box></Link>
+                     >
+                        <Box border={"2px solid black"} lineHeight={2} height={"80%"}>
+                           <img
+                              src={el.url}
+                              alt=""
+                           ></img>
+                           <Text fontSize={13} fontWeight={"bold"} pt={3} pl={1}>
+                              {el.title}
+                           </Text>
+                           <Text color={"#6F7284"} fontSize={13}  >{el.mkt}</Text>
+                           <Text fontWeight={"bold"} color={"#6F7284"} fontSize={14}  >Best Price* <Text as={"span"} fontWeight={"bold"} fontSize={"16px"} color={"#EF4281"}>Rs.{el.price}</Text></Text>
+                        </Box>
+                        <Spacer />
+
+                        <Flex justify={"center"} height={"10%"}><Button marginTop={"15px"} backgroundColor={"#24AEB1"} colorScheme={"twitter"}>ADD TO CART</Button></Flex>
+                     </Flex></Link>
                ))}
             </Flex>
          </Box>
 
-         {/* <Box margin={"auto"} border={"2px solid red"} bg={"#F3F7FB"} gap={10} p={4}>
-            <Box
-               bg={"#F3F7FB"}
-               display={"flex"}
-               pl={10}
-               justifyContent={"space-between"}
-            >
-               <Text color={"#6F7284"} fontSize={12} fontWeight={"bold"}>
-                  {" "}
-                  UPTO 65% OFF
-               </Text>
-            </Box>
-
-
-            <Flex marginTop={"20px"} justifyContent={"center"} gap={"20px"}>
-               <Box
-                  rounded={10}
-                  boxShadow={"rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"}
-                  p={4}
-                  width={260}
-                  height={340}
-                  bg={"white"}
-               >
-                  <img
-                     src="https://www.netmeds.com/images/product-v1/150x150/932840/mamaearth_sleeping_mask_vitamin_c_100_gm_0_0.jpg"
-                     alt=""
-                  ></img>
-                  <Text fontSize={13} fontWeight={"bold"} pt={3} pl={1}>
-                     Mamaearth Sleeping Mask - Vitamin C 100 gm
-
-                  </Text>
-                  <Text color={"#6F7284"} fontSize={13}  >Mkt: Honasa Consumer Pvt Ltd</Text>
-                  <Text fontWeight={"bold"} color={"#6F7284"} fontSize={14}  >Best Price* <Text as={"span"} fontWeight={"bold"} fontSize={"16px"} color={"#EF4281"}>Rs. 449.25</Text></Text>
-                  <Button marginTop={"15px"} backgroundColor={"#24AEB1"} colorScheme={"twitter"}>ADD TO CART</Button>
-               </Box>
-
-
-
-               <Box
-                  rounded={10}
-                  boxShadow={"rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"}
-                  p={4}
-                  width={260}
-                  height={340}
-                  bg={"white"}
-               >
-                  <img
-                     src="https://www.netmeds.com/images/product-v1/150x150/933015/aroma_magic_face_wash_neem_tea_tree_50_ml_0_0.jpg"
-                     alt=""
-                  ></img>
-                  <Text fontSize={13} fontWeight={"bold"} pt={3} pl={1}>
-                     Aroma Magic Face Wash - Neem & Tea Tree 50 ml
-
-
-                  </Text>
-                  <Text color={"#6F7284"} fontSize={13}  >Mkt: Blossom Kochhar Beauty Product..</Text>
-                  <Text fontWeight={"bold"} color={"#6F7284"} fontSize={14}  >Best Price* <Text as={"span"} fontWeight={"bold"} fontSize={"16px"} color={"#EF4281"}>Rs. 80.00</Text></Text>
-                  <Button marginTop={"15px"} backgroundColor={"#24AEB1"} colorScheme={"twitter"}>ADD TO CART</Button>
-               </Box>
-
-
-
-
-
-               <Box
-                  rounded={10}
-                  boxShadow={"rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"}
-                  p={4}
-                  width={260}
-                  height={340}
-                  bg={"white"}
-               >
-                  <img
-                     src="https://www.netmeds.com/images/product-v1/150x150/923408/cetaphil_bright_healthy_radiance_brightness_reveal_creamy_cleanser_100gm_0_2.jpg"
-                     alt=""
-                  ></img>
-                  <Text fontSize={13} fontWeight={"bold"} pt={3} pl={1}>
-                     Cetaphil Bright Healthy Radiance Brightness Reveal Creamy Cleanser
-
-
-
-                  </Text>
-                  <Text color={"#6F7284"} fontSize={13}  >Mkt: Galderma India Pvt Ltd</Text>
-                  <Text fontWeight={"bold"} color={"#6F7284"} fontSize={14}  >Best Price* <Text as={"span"} fontWeight={"bold"} fontSize={"16px"} color={"#EF4281"}>₹ 616.00</Text></Text>
-                  <Button marginTop={"15px"} backgroundColor={"#24AEB1"} colorScheme={"twitter"}>ADD TO CART</Button>
-               </Box>
-
-
-
-               <Box
-                  rounded={10}
-                  boxShadow={"rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"}
-                  p={4}
-                  width={260}
-                  height={340}
-                  bg={"white"}
-               >
-                  <img
-                     src="https://www.netmeds.com/images/product-v1/150x150/829556/aroma_magic_mint_cleanser_200_gm_0.jpg"
-                     alt=""
-                  ></img>
-                  <Text fontSize={13} fontWeight={"bold"} pt={3} pl={1}>
-                     Aroma Magic Mint Cleanser <br /> 200 gm
-
-
-                  </Text>
-                  <Text color={"#6F7284"} fontSize={13}  >Mkt: Blossom Kochhar Beauty Product..</Text>
-                  <Text fontWeight={"bold"} color={"#6F7284"} fontSize={14}  >Best Price* <Text as={"span"} fontWeight={"bold"} fontSize={"16px"} color={"#EF4281"}>Rs. 268.40</Text></Text>
-                  <Button marginTop={"15px"} backgroundColor={"#24AEB1"} colorScheme={"twitter"}>ADD TO CART</Button>
-               </Box>
-
-
-
-               <Box
-                  rounded={10}
-                  boxShadow={"rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"}
-                  p={4}
-                  width={260}
-                  height={340}
-                  bg={"white"}
-               >
-                  <img
-                     src="https://www.netmeds.com/images/product-v1/150x150/1029275/cgg_cosmetics_rose_water_micellar_cleansing_water_4_in_1_skin_hydration_removing_makeup_for_all_skin_types_300_ml_423259_0_0.jpg"
-                     alt=""
-                  ></img>
-                  <Text fontSize={13} fontWeight={"bold"} pt={3} pl={1}>
-                     CGG Cosmetics Rose Water Micellar Cleansing Water 4 in 1
-
-
-                  </Text>
-                  <Text color={"#6F7284"} fontSize={13}  >Mkt: West Coast Pharmaceuticals Wor..</Text>
-                  <Text fontWeight={"bold"} color={"#6F7284"} fontSize={14}  >Best Price* <Text as={"span"} fontWeight={"bold"} fontSize={"16px"} color={"#EF4281"}>Rs. 383.50</Text></Text>
-                  <Button marginTop={"15px"} backgroundColor={"#24AEB1"} colorScheme={"twitter"}>ADD TO CART</Button>
-               </Box>
-            </Flex>
-         </Box> */}
+         
 
 
          {/* EMAMI */}
@@ -651,28 +561,40 @@ function Wellness() {
                   UPTO 200
                </Text>
             </Box>
-            <Flex marginTop={"20px"} justifyContent={"center"} gap={"20px"}>
-               {data?.filter((el) => el.price <= 200 ? el : null).splice(5, 10).map((el) => (
-                  <Link key={el.id} to={`/wellness/${el.id}`} > <Box
 
-                     rounded={10}
-                     boxShadow={"rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"}
-                     p={4}
-                     width={260}
-                     height={340}
-                     bg={"white"}
-                  >
-                     <img
-                        src={el.url}
-                        alt=""
-                     ></img>
-                     <Text fontSize={13} fontWeight={"bold"} pt={3} pl={1}>
-                        {el.title}
-                     </Text>
-                     <Text color={"#6F7284"} fontSize={13}  >{el.mkt}</Text>
-                     <Text fontWeight={"bold"} color={"#6F7284"} fontSize={14}  >Best Price* <Text as={"span"} fontWeight={"bold"} fontSize={"16px"} color={"#EF4281"}>Rs.{el.price}</Text></Text>
-                     <Button marginTop={"15px"} backgroundColor={"#24AEB1"} colorScheme={"twitter"}>ADD TO CART</Button>
-                  </Box></Link>
+            <Flex flexWrap={"wrap"} justify={"space-evenly"} width={"100%"} gap={"20px"} border={"2px solid blue"} marginTop={"20px"}>
+               {data?.filter((el) => el.price <= 200 ? el : null).splice(0, 4).map((el) => (
+                  <Link key={el.id} to={`/wellness/${el.id}`} >
+                     <Flex
+
+                        wrap={"wrap"}
+                        border={"2px solid green"}
+                        direction={"column"}
+                        minHeight={"400px"}
+                        rounded={10}
+                        boxShadow={"rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"}
+                        p={4}
+                        width={["300px", "250px", "250px", "280px"]}
+                        //width={260}
+                        //height={340}
+                        bg={"white"}
+                     >
+                        <Box border={"2px solid black"} lineHeight={2} height={"80%"}>
+                           <img
+                              src={el.url}
+                              alt=""
+                           ></img>
+                           <Text fontSize={13} fontWeight={"bold"} pt={3} pl={1}>
+                              {el.title}
+                           </Text>
+                           <Text color={"#6F7284"} fontSize={13}  >{el.mkt}</Text>
+                           <Text fontWeight={"bold"} color={"#6F7284"} fontSize={14}  >Best Price* <Text as={"span"} fontWeight={"bold"} fontSize={"16px"} color={"#EF4281"}>Rs.{el.price}</Text></Text>
+                        </Box>
+
+                        <Spacer />
+
+                        <Flex justify={"center"} height={"10%"}><Button marginTop={"15px"} backgroundColor={"#24AEB1"} colorScheme={"twitter"}>ADD TO CART</Button></Flex>
+                     </Flex></Link>
                ))}
             </Flex>
          </Box>
@@ -835,28 +757,36 @@ function Wellness() {
                   ABOVE 600
                </Text>
             </Box>
-            <Flex marginTop={"20px"} justifyContent={"center"} gap={"20px"}>
-               {data?.filter((el) => el.price >= 600 ? el : null).splice(0, 5).map((el) => (
-                  <Link key={el.id} to={`/wellness/${el.id}`} > <Box
-
-                     rounded={10}
-                     boxShadow={"rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"}
-                     p={4}
-                     width={260}
-                     height={340}
-                     bg={"white"}
-                  >
-                     <img
-                        src={el.url}
-                        alt=""
-                     ></img>
-                     <Text fontSize={13} fontWeight={"bold"} pt={3} pl={1}>
-                        {el.title}
-                     </Text>
-                     <Text color={"#6F7284"} fontSize={13}  >{el.mkt}</Text>
-                     <Text fontWeight={"bold"} color={"#6F7284"} fontSize={14}  >Best Price* <Text as={"span"} fontWeight={"bold"} fontSize={"16px"} color={"#EF4281"}>Rs.{el.price}</Text></Text>
-                     <Button marginTop={"15px"} backgroundColor={"#24AEB1"} colorScheme={"twitter"}>ADD TO CART</Button>
-                  </Box></Link>
+            <Flex flexWrap={"wrap"} justify={"space-evenly"} width={"100%"} gap={"20px"} border={"2px solid blue"} marginTop={"20px"}>
+               {data?.filter((el) => el.price >= 600 ? el : null).splice(0, 4).map((el) => (
+                  <Link key={el.id} to={`/wellness/${el.id}`} >
+                     <Flex
+                        wrap={"wrap"}
+                        border={"2px solid green"}
+                        direction={"column"}
+                        minHeight={"400px"}
+                        rounded={10}
+                        boxShadow={"rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"}
+                        p={4}
+                        width={["300px", "250px", "250px", "280px"]}
+                        //width={260}
+                        //height={340}
+                        bg={"white"}
+                     >
+                        <Box border={"2px solid black"} lineHeight={2} height={"80%"}>
+                        <img
+                           src={el.url}
+                           alt=""
+                        ></img>
+                        <Text fontSize={13} fontWeight={"bold"} pt={3} pl={1}>
+                           {el.title}
+                        </Text>
+                        <Text color={"#6F7284"} fontSize={13}  >{el.mkt}</Text>
+                        <Text fontWeight={"bold"} color={"#6F7284"} fontSize={14}  >Best Price* <Text as={"span"} fontWeight={"bold"} fontSize={"16px"} color={"#EF4281"}>Rs.{el.price}</Text></Text>
+                        </Box>
+             
+                        <Flex justify={"center"} height={"10%"}><Button marginTop={"15px"} backgroundColor={"#24AEB1"} colorScheme={"twitter"}>ADD TO CART</Button></Flex>
+                     </Flex></Link>
                ))}
             </Flex>
          </Box>
@@ -1014,14 +944,18 @@ function Wellness() {
 
 
             <Box >
-               <Box bg={"#F3F7FB"} display={"flex"} gap={5} p={8}>
+               <Box display={"flex"} flexWrap={"wrap"} justify={"space-between"} width={"110%"} gap={"20px"} border={"2px solid blue"} marginTop={"20px"}>
+               {/* bg={"#F3F7FB"} display={"flex"} gap={5} p={8} */}
                   <Box
-                     marginLeft={"30px"}
+                  border={"2px solid black"}
+                     //marginLeft={"30px"}
                      boxShadow={"rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"}
                      rounded={10}
-                     pt={10}
-                     pl={19}
-                     width={230}
+                     p={4}
+                      pt={10}
+                      pl={19}
+                     width={["300px", "250px", "250px", "280px"]}
+                     //width={230}
                      height={280}
                      bg={"white"}
                   >
@@ -1030,7 +964,7 @@ function Wellness() {
                         src="https://www.netmeds.com/images/cms/wysiwyg/category/v2/img/lung-care.jpg?v=1"
                         alt=""
                      ></img>
-                     <Text marginLeft={"-5px"} fontSize={18} fontWeight={500} pt={14} pl={38}>
+                     <Text  marginLeft={"5px"} fontSize={18} fontWeight={500} pt={14} pl={38}>
                         Lungs Care
                      </Text>
                   </Box>
@@ -1038,12 +972,14 @@ function Wellness() {
 
 
                   <Box
-                     marginLeft={"30px"}
+                     //marginLeft={"30px"}
                      boxShadow={"rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"}
                      rounded={10}
+                     p={4}
                      pt={10}
                      pl={22}
-                     width={230}
+                     width={["300px", "250px", "250px", "280px"]}
+                     //width={230}
                      height={280}
                      bg={"white"}
                   >
@@ -1052,7 +988,7 @@ function Wellness() {
                         src="https://www.netmeds.com/images/cms/wysiwyg/category/v2/img/weight-care.jpg?v=1"
                         alt=""
                      ></img>
-                     <Text marginLeft={"-5px"} fontSize={18} fontWeight={500} pt={14} pl={29}>
+                     <Text marginLeft={"15px"} fontSize={18} fontWeight={500} pt={14} pl={29}>
                         Weight Care
                      </Text>
                   </Box>
@@ -1060,12 +996,14 @@ function Wellness() {
 
 
                   <Box
-                     marginLeft={"30px"}
+                     //marginLeft={"30px"}
                      boxShadow={"rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"}
                      rounded={10}
+                     p={4}
                      pt={10}
                      pl={13}
-                     width={230}
+                     width={["300px", "250px", "250px", "280px"]}
+                     //width={230}
                      height={280}
                      bg={"white"}
                   >
@@ -1074,18 +1012,20 @@ function Wellness() {
                         src="https://www.netmeds.com/images/cms/wysiwyg/category/v2/img/women-s-care.jpg?v=1"
                         alt=""
                      ></img>
-                     <Text marginLeft={"-5px"} fontSize={18} fontWeight={500} pt={14} pl={27}>
+                     <Text marginLeft={"30px"} fontSize={18} fontWeight={500} pt={14} pl={27}>
                         Women's care
                      </Text>
                   </Box>
 
                   <Box
-                     marginLeft={"30px"}
+                    // marginLeft={"30px"}
                      boxShadow={"rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"}
                      rounded={10}
+                     p={4}
                      pt={10}
                      pl={21}
-                     width={230}
+                     width={["300px", "250px", "250px", "280px"]}
+                     //width={230}
                      height={280}
                      bg={"white"}
                   >
@@ -1100,12 +1040,15 @@ function Wellness() {
                   </Box>
 
                   <Box
-                     marginLeft={"30px"}
+                     //marginLeft={"30px"}
                      boxShadow={"rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"}
                      rounded={10}
+                     
+                     p={4}
                      pt={10}
-                     pl={45}
-                     width={230}
+                     pl={25}
+                     width={["300px", "250px", "250px", "280px"]}
+                     //width={230}
                      height={280}
                      bg={"white"}
                   >
@@ -1114,7 +1057,7 @@ function Wellness() {
                         src="https://www.netmeds.com/images/cms/wysiwyg/category/v2/img/cold-and-fever.jpg?v=1"
                         alt=""
                      ></img>
-                     <Text marginLeft={"-5px"} fontSize={18} fontWeight={500} pt={14} >
+                     <Text marginLeft={"25px"} fontSize={18} fontWeight={500} pt={14} >
                         Cold And Fever
                      </Text>
                   </Box>
