@@ -11,6 +11,13 @@ import {
    Input,
    InputGroup,
    InputLeftAddon,
+   Popover,
+   PopoverArrow,
+   PopoverBody,
+   PopoverCloseButton,
+   PopoverContent,
+   PopoverHeader,
+   PopoverTrigger,
    Text,
    useDisclosure,
 } from "@chakra-ui/react";
@@ -20,10 +27,32 @@ import { FaUserCircle } from "react-icons/fa";
 import { IoChevronDown } from "react-icons/io5";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector, } from "react-redux";
+import { loginAction } from "../../store/MainAuth/AuthActions";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 function Navbar() {
    const navigate = useNavigate();
    const { isOpen, onOpen, onClose } = useDisclosure();
+   const dispatch = useDispatch();
+   const [name, setname] = useState("")
+   const { data: { firstName, imageURL } } = useSelector((store) => store.auth)
+   const getData = async () => {
+      try {
+         const res = await axios.get("https://medimedcom-backend-production.up.railway.app/redisdata")
+         const { data: { firstName } } = res
+         setname(firstName)
+      } catch (e) {
+         console.log(e)
+      }
+   }
+
+   useEffect(() => {
+      dispatch(loginAction())
+      setname(firstName)
+      getData()
+   }, [])
 
    return (
       <Flex
@@ -44,6 +73,7 @@ function Navbar() {
             cursor={"pointer"}
             onClick={() => navigate("/")}
          />
+
          <InputGroup
             bg={"white"}
             borderRadius={"2xl"}
@@ -93,10 +123,10 @@ function Navbar() {
             <Button
                as={NavLink}
                to={"/login"}
-               leftIcon={<FaUserCircle size={22} />}
+               leftIcon={imageURL ? <Image src={imageURL} borderRadius={"full"} boxSize={"7"} /> : <FaUserCircle size={22} />}
                variant={"none"}
             >
-               Sign in / Sign up
+               {!name ? "Sign in / Sign up" : name}
             </Button>
          </HStack>
          <Button

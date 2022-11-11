@@ -10,26 +10,47 @@ import {
     PinInputField,
     Text,
 } from "@chakra-ui/react";
-import React, { useState } from 'react'
+import axios from "axios";
+import React, { useEffect, useState } from 'react'
 
 
 
 function RightConditionRightCompo({ phnumber, verifyOtp }) {
     const [otp, setotp] = useState("")
+    const [response, setresponse] = useState()
     const [formData, setformData] = useState({
         email: "",
         firstName: "",
-        lastName: ""
+        lastName: "",
+        imageURL: "https://user-images.githubusercontent.com/40628582/201342233-58862907-4a5e-41a8-9245-ee99734dd4e2.png"
     })
     const handleChange = (e) => {
         const { name, value } = e.target
         setformData({ ...formData, [name]: value })
     }
+    const postUser = async () => {
+        const { email, firstName, lastName } = formData
+        if (!email || !firstName || !lastName) {
+            alert("please enter all the required fields")
+
+        }
+        try {
+            const res = await axios.post("https://medimedcom-backend-production.up.railway.app/postUserViaForm", formData)
+            setresponse(res)
+        } catch (e) {
+            alert(`rightcompo condition failed: ${e.message}`)
+        }
+
+    }
     const handleSubmit = () => {
         verifyOtp(otp)
-        
+        postUser()
+
     }
-    console.log(otp);
+    useEffect(() => {
+    }, [response])
+
+
     return (
         <>
             <Box
