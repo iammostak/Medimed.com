@@ -89,19 +89,19 @@ function Footer() {
                <Stack align={"flex-start"}>
                   <ListHeader>Company</ListHeader>
                   {companyArr.map((item) => (
-                     <ListItem>{item}</ListItem>
+                     <ListItem key={item}>{item}</ListItem>
                   ))}
                </Stack>
                <Stack align={"flex-start"}>
                   <ListHeader>Shopping</ListHeader>
                   {shoppingArr.map((item) => (
-                     <ListItem>{item}</ListItem>
+                     <ListItem key={item}>{item}</ListItem>
                   ))}
                </Stack>
                <Stack align={"flex-start"}>
                   <ListHeader>Social</ListHeader>
                   {socialArr.map((item) => (
-                     <ListItem>{item}</ListItem>
+                     <ListItem key={item}>{item}</ListItem>
                   ))}
                </Stack>
                <Stack align={"flex-start"}>
