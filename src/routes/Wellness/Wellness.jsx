@@ -379,7 +379,7 @@ function Wellness() {
                   src="https://www.netmeds.com/images/category/v1/525/thumb/body_care_1.jpg"
                   alt=""
                ></img>
-               <Text fontSize={14} fontWeight={500} pt={5} pl={12}>
+               <Text marginLeft={"25px"} fontSize={14} fontWeight={500} pt={5} pl={12}>
                   Body care
                </Text>
             </Box>
@@ -396,7 +396,7 @@ function Wellness() {
                   src="https://www.netmeds.com/images/category/v1/547/thumb/hair_care_2.jpg"
                   alt=""
                ></img>
-               <Text fontSize={14} fontWeight={500} pt={8} pl={12}>
+               <Text marginLeft={"25px"}  fontSize={14} fontWeight={500} pt={8} pl={12}>
                   Hair Care
                </Text>
             </Box>
@@ -413,7 +413,7 @@ function Wellness() {
                   src="https://www.netmeds.com/images/category/v1/562/thumb/oral_care.jpg"
                   alt=""
                ></img>
-               <Text fontSize={14} fontWeight={500} pt={5} pl={12}>
+               <Text marginLeft={"25px"}  fontSize={14} fontWeight={500} pt={5} pl={12}>
                   Oral care
                </Text>
             </Box>
@@ -431,7 +431,7 @@ function Wellness() {
                   src="https://www.netmeds.com/images/category/v1/3772/thumb/home_health.jpg"
                   alt=""
                ></img>
-               <Text fontSize={14} fontWeight={500} pt={4} pl={8}>
+               <Text marginLeft={"25px"}  fontSize={14} fontWeight={500} pt={4} pl={8}>
                   Home & Health
                </Text>
             </Box>
@@ -964,7 +964,7 @@ function Wellness() {
                         src="https://www.netmeds.com/images/cms/wysiwyg/category/v2/img/lung-care.jpg?v=1"
                         alt=""
                      ></img>
-                     <Text marginLeft={"-5px"} fontSize={18} fontWeight={500} pt={14} pl={38}>
+                     <Text  marginLeft={"5px"} fontSize={18} fontWeight={500} pt={14} pl={38}>
                         Lungs Care
                      </Text>
                   </Box>
@@ -988,7 +988,7 @@ function Wellness() {
                         src="https://www.netmeds.com/images/cms/wysiwyg/category/v2/img/weight-care.jpg?v=1"
                         alt=""
                      ></img>
-                     <Text marginLeft={"-5px"} fontSize={18} fontWeight={500} pt={14} pl={29}>
+                     <Text marginLeft={"15px"} fontSize={18} fontWeight={500} pt={14} pl={29}>
                         Weight Care
                      </Text>
                   </Box>
@@ -1012,7 +1012,7 @@ function Wellness() {
                         src="https://www.netmeds.com/images/cms/wysiwyg/category/v2/img/women-s-care.jpg?v=1"
                         alt=""
                      ></img>
-                     <Text marginLeft={"-5px"} fontSize={18} fontWeight={500} pt={14} pl={27}>
+                     <Text marginLeft={"30px"} fontSize={18} fontWeight={500} pt={14} pl={27}>
                         Women's care
                      </Text>
                   </Box>
@@ -1057,7 +1057,7 @@ function Wellness() {
                         src="https://www.netmeds.com/images/cms/wysiwyg/category/v2/img/cold-and-fever.jpg?v=1"
                         alt=""
                      ></img>
-                     <Text marginLeft={"-5px"} fontSize={18} fontWeight={500} pt={14} >
+                     <Text marginLeft={"25px"} fontSize={18} fontWeight={500} pt={14} >
                         Cold And Fever
                      </Text>
                   </Box>
