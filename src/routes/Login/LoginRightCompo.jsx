@@ -64,7 +64,7 @@ function LoginRightCompo() {
     const googleAuth = () => {
         setredisbool(true)
         window.open(
-            "http://localhost:8080/auth/google",
+            "https://medimedcom-backend-production.up.railway.app/auth/google",
             "_self"
         );
     };
