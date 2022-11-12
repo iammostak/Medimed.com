@@ -2,8 +2,10 @@ import {
    Box,
    Button,
    Drawer,
+   DrawerBody,
    DrawerCloseButton,
    DrawerContent,
+   DrawerHeader,
    DrawerOverlay,
    Flex,
    HStack,
@@ -141,6 +143,41 @@ function Navbar() {
             <DrawerOverlay />
             <DrawerContent>
                <DrawerCloseButton />
+               <DrawerHeader>
+                  <Image
+                     src={
+                        "https://raw.githubusercontent.com/iammostak/adhesive-legs-8944/2d3100a8c566459a2318b125206669e5ae3ee42b/src/assets/logos/Medimed.com-navbar.png"
+                     }
+                  />
+               </DrawerHeader>
+               <DrawerBody>
+                  <Box w={"full"} mb={4}>
+                     <Button
+                        w={"full"}
+                        size={"lg"}
+                        as={NavLink}
+                        to={"/wellness"}
+                        bg={"#32AEB0"}
+                        color={"white"}
+                        letterSpacing={1}
+                     >
+                        Wellness
+                     </Button>
+                  </Box>
+                  <Box w={"full"} mb={4}>
+                     <Button
+                        w={"full"}
+                        size={"lg"}
+                        as={NavLink}
+                        to={"/login"}
+                        bg={"#32AEB0"}
+                        color={"white"}
+                        letterSpacing={1}
+                     >
+                        Sign in / Sign up
+                     </Button>
+                  </Box>
+               </DrawerBody>
             </DrawerContent>
          </Drawer>
       </Flex>
