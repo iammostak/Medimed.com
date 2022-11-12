@@ -5,19 +5,9 @@ import {
     Heading,
     Image,
     Input,
-    InputGroup,
-    InputLeftAddon,
     Text,
-    Badge,
-
     Center,
-
-
-
-    Link,
     Stack,
-
-    useColorModeValue,
     Avatar,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from 'react'
@@ -35,8 +25,10 @@ function LoginRightCompo() {
     const [result, setresult] = useState()
     const [bool, setbool] = useState(true)
     const [redisbool, setredisbool] = useState(false)
-
+    const [loading, setloading] = useState(false)
     const { data } = useSelector((store) => store.auth)
+    
+
 
     const dispatch = useDispatch()
     const getOtp = async () => {
@@ -59,8 +51,10 @@ function LoginRightCompo() {
     }, [redisbool])
 
     const verifyOtp = async (main) => {
+        setloading(true)
         try {
             let data = await result.confirm(main)
+            // setloading(false)
             // console.log(data);
             // here OTP data
         } catch (error) {
@@ -70,22 +64,22 @@ function LoginRightCompo() {
     const googleAuth = () => {
         setredisbool(true)
         window.open(
-            "https://medimedcom-backend-production.up.railway.app/auth/google",
+            "http://localhost:8080/auth/google",
             "_self"
         );
-
     };
     const handleLogout = async () => {
         try {
-            const huru = await axios.post("https://medimedcom-backend-production.up.railway.app/redisLogout", { huruBool: true });
+            localStorage.removeItem("email")
+            window.location.reload()
             alert("logout successfull")
 
         } catch (error) {
             window.location.reload()
-            // alert(`login rightcompo ${error.message}`)
+
         }
     }
-    // console.log("data" + data);
+
     return (
         <>
             {
@@ -195,10 +189,11 @@ function LoginRightCompo() {
 
                             <div id="recaptcha-container" />
                             <Button
-                                // onClick={handleSubmit}
+
                                 color={"white"}
                                 size={"lg"}
                                 width={"100%"}
+                                isLoading={loading ? true : false}
 
                                 bg={"#24AEB1"}
                                 onClick={getOtp}
