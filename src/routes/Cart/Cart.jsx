@@ -6,10 +6,6 @@ import { Link } from "react-router-dom";
 import CartCard from "./CartCard";
 import PaymentDetails from "./paymentDetails/PaymentDetails";
 const mainColor = "rgb(50,174,177)";
-
-
-
-
 const getCartData = async () => {
   // https://medimedcom-backend-production.up.railway.app/products
   let data = await axios.get("http://localhost:8080/carts", {
@@ -17,7 +13,6 @@ const getCartData = async () => {
   });
   return data;
 };
-
 function Cart() {
     const[cartData,setCartData]=useState([])
     const toast=useToast()
@@ -28,46 +23,35 @@ function Cart() {
     })
 // const payment=useSelector(store=>store.paymentState
 // )
-
 // console.log("payment",payment)
-
-
-
   const TotalPrice = cartData?.reduce(
     (acc, el) =>
       acc +
       Number(
         el.productId.price
-       
       ) *
         el.quantity,
     0
     )
-    const finalePrice = TotalPrice.toFixed(); 
+    const finalePrice = TotalPrice.toFixed();
   const FullPrice = cartData.reduce(
     (acc, el) =>
       acc +
       Number(
         el.productId.Fprice
-        
       ) *
         el.quantity,
     0
   );
   const fullMrp = FullPrice.toFixed(2);
-
-
-
 const handleQty=async({id,type})=>{
     setCartState({...cartState,loading:true,error:false,success:false})
 try{
-
     // let d=await axios.post("https://medimedcom-backend-production.up.railway.app/carts/update",{
     let d=await axios.post("http://localhost:8080/carts/update",{
         type:type,
         productId:id._id
     })
-   
 }catch(e){
     console.log(e)
     setCartState({...cartState,loading:false,error:true,success:false})
@@ -85,9 +69,8 @@ setCartState({...cartState,loading:false,error:false,success:true})
 const removeCartHandler=async(id)=>{
     setCartState({...cartState,loading:true,error:false,success:false})
 try{
-
     await axios.post("http://localhost:8080/carts/remove",{
-        productId:id 
+        productId:id
     })
     getCartData()
     .then((res) => {
@@ -111,9 +94,7 @@ try{
       })
     setCartState({...cartState,loading:false,error:true,success:false})
 }
-
 }
-
   useEffect(() => {
  setCartState({...cartState,loading:true,success:false,error:false})
     getCartData()
@@ -127,23 +108,18 @@ try{
         setCartState({...cartState,loading:false,success:false,error:true})
       })
     }, []);
-
-
-    // for if empty cart 
+    // for if empty cart
     if(cartData.length===0)
     {
         return<Flex h="350px" flexDirection={"column"} alignItems="center" >
-
        <Box h={"300px"}  w={"100%"} backgroundRepeat={"no-repeat"} backgroundPosition="center" backgroundSize={"contain"} backgroundImage={"url(https://user-images.githubusercontent.com/101392872/201416025-b7d96214-f2e4-43db-9a66-ae4002d5a793.png)"}></Box>
-
 <br /><br />
 <Link to="/"  ><Button bg={mainColor} color="white" colorScheme={"none"} >Back To Home page</Button></Link>
         </Flex>
     }
-   
     //else part
     return (
-    <Box 
+    <Box
       display={["blok", "blok", "blok", "flex", "flex"]}
       gap={8}
       w="90%"
@@ -170,5 +146,4 @@ try{
     </Box>
   );
 }
-
 export default Cart;
