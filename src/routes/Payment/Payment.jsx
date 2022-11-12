@@ -11,9 +11,11 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
 
 const Payment = () => {
+    const payment = useSelector((store) => store)
     const [flag, setFlag] = useState(false);
     const [check, setCheck] = useState(false);
     console.log(check);
@@ -36,7 +38,7 @@ const Payment = () => {
     return (
         <>
             <Box direction={["column", "column", "row", "row"]} width={"100%"} marginTop={"20px"}>
-                <Flex        borderRadius={"10px"} paddingTop={"15px"} padding={"20px"} border={"2px solid red"} height={"70px"} width={"80%"} background={"#151b39"} justifyContent={"space-between"} margin={"auto"}>
+                <Flex borderRadius={"10px"} paddingTop={"15px"} padding={"20px"} height={"70px"} width={"80%"} background={"#151b39"} justifyContent={"space-between"} margin={"auto"}>
                     <Text fontWeight={500} fontSize={"x-large"} paddingY={-5} pl={5} color={"white"}>
                         Payment Details
                     </Text>
@@ -61,8 +63,8 @@ const Payment = () => {
 
                 <Box height={"auto"} bg={"#F3F7FB"}>
                     <Box
-                      direction={["column", "column", "row", "row"]}
-                        border={"2px solid blue"}
+                        direction={["column", "column", "row", "row"]}
+                       
 
                         display={"flex"}
                         gap={8}
@@ -495,8 +497,7 @@ const Payment = () => {
                         </Box>
 
                         <Box
-                        
-border={"2px solid red"}
+
                             bg={"white"}
                             rounded={"lg"}
                             p={5}
@@ -563,9 +564,11 @@ border={"2px solid red"}
                                 </Box>
 
                                 <Box>
-                                    <Link to="/cart/payment">
+                                    <Link to="/">
                                         {" "}
-                                        <Button size={"lg"}>PROCEED</Button>{" "}
+                                        <Button onClick={() => {
+                                            alert("Payment Succesfull")
+                                        }} size={"lg"}>PROCEED</Button>{" "}
                                     </Link>
                                 </Box>
                             </Box>

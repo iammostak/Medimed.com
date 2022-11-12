@@ -16,61 +16,47 @@ const getCartData = async () => {
 };
 
 function Cart() {
-    const[cartData,setCartData]=useState([])
+  const [cartData, setCartData] = useState([])
   const TotalPrice = cartData?.reduce(
     (acc, el) =>
       acc +
       Number(
         el.productId.price
-       
+
       ) *
-        el.quantity,
+      el.quantity,
     0
-    )
-    const finalePrice = TotalPrice.toFixed(); 
+  )
+  const finalePrice = TotalPrice.toFixed();
   const FullPrice = cartData.reduce(
     (acc, el) =>
       acc +
       Number(
         el.productId.Fprice
-        
+
       ) *
-        el.quantity,
+      el.quantity,
     0
   );
   const fullMrp = FullPrice.toFixed(2);
 
 
 
-const handleQty=async({id,type})=>{
-    
-try{
+  const handleQty = async ({ id, type }) => {
 
-    let d=await axios.post("https://medimedcom-backend-production.up.railway.app/carts/update",{
-        type:type,
-        productId:id._id
-    },
-    {
-        headers: { userid: "636d1da8f6cde62d954b2473" }
-    })
-    console.log(d)
-}catch(e){
-    console.log(e)
-}
-getCartData()
-.then((res) => {
-  setCartData([...res.data])
-  // console.log(res.data);
-})
-.catch((e) => {
-  // console.log(e);
-})
-alert("success")
-}
+    try {
 
-
-  useEffect(() => {
- 
+      let d = await axios.post("https://medimedcom-backend-production.up.railway.app/carts/update", {
+        type: type,
+        productId: id._id
+      },
+        {
+          headers: { userid: "636d1da8f6cde62d954b2473" }
+        })
+      console.log(d)
+    } catch (e) {
+      console.log(e)
+    }
     getCartData()
       .then((res) => {
         setCartData([...res.data])
@@ -78,10 +64,24 @@ alert("success")
       })
       .catch((e) => {
         // console.log(e);
-      });console.log(TotalPrice)
-    }, []);
-   
-    return (
+      })
+    alert("success")
+  }
+
+
+  useEffect(() => {
+
+    getCartData()
+      .then((res) => {
+        setCartData([...res.data])
+        // console.log(res.data);
+      })
+      .catch((e) => {
+        // console.log(e);
+      }); console.log(TotalPrice)
+  }, []);
+
+  return (
     <Box
       display={["blok", "blok", "blok", "flex", "flex"]}
       gap={8}
@@ -89,7 +89,7 @@ alert("success")
       margin="auto"
       marginTop={10}
     >
-      {cartData&&<PaymentDetails price={fullMrp} total={finalePrice}   />}
+      {cartData && <PaymentDetails price={fullMrp} total={finalePrice} />}
       <Box w="100%" border={"1px solid red"}>
         <Heading marginBottom={10}>Order Summary</Heading>
         <Text>PRODUCTS</Text>
