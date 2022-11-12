@@ -1,15 +1,16 @@
-import { Box, Button, Center, Flex, Grid, GridItem, Text } from '@chakra-ui/react'
+import { Box, Button, Center, Flex, Grid, GridItem, Skeleton, Text } from '@chakra-ui/react'
 import React from 'react'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
-function PaymentDetails({ price,total }) {
-
+function PaymentDetails({ price,total,cartState }) {
+    const dispatch=useDispatch()
     const navigate = useNavigate()
 
     const Discount = (total - price).toFixed(2)
 
     return (
-        <Box w={["100%","100%","100%","50%","50%"]} maxH="320px" padding={5} borderRadius="10px" boxShadow='base' position="sticky" top={["","","","30px","30px"]}>
+        <Skeleton isLoaded={!cartState.loading} w={["100%","100%","100%","50%","50%"]} maxH="320px" padding={5} borderRadius="10px" boxShadow='base' position="sticky" top={["","","","30px","30px"]}>
             <Text letterSpacing={1} color="gray.500" fontSize="sm" paddingBottom="20px">PAYMENT DETAILS</Text>
             <Flex justify="space-between" color="blackAlpha.700" paddingBottom="10px">
                 <Text>MRP Total</Text>
@@ -32,7 +33,14 @@ function PaymentDetails({ price,total }) {
                 </GridItem>
                 <GridItem rowSpan={2} colSpan={1} paddingTop={1}>
                     <Center>
-                        <Button bg="teal" color="white" onClick={() => {alert("payment function pending")}}>PROCEED</Button>
+                        <Button bg="teal" color="white" onClick={() => {
+                            
+                            dispatch({type:"payment",payload:{
+                                price:price,total:total,discount:Discount
+                            }})
+                            // navigate("/payment")
+                    
+                            }}>PROCEED</Button>
                     </Center>
 
                 </GridItem>
@@ -40,7 +48,7 @@ function PaymentDetails({ price,total }) {
                     <Text fontWeight="bold"  >RS. {total}</Text>
                 </GridItem>
             </Grid>
-        </Box >
+        </Skeleton >
     )
 }
 
