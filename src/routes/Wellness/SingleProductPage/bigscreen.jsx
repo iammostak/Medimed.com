@@ -12,12 +12,13 @@ import {
     Spinner,
     Toast,
     useToast,
+    Skeleton,
   } from "@chakra-ui/react";
 import { useState } from "react";
   import { BsFillHeartFill, BsArrowRightCircleFill } from "react-icons/bs";
   import MainImg from "./carousel/MainImg";
   const mainColor = "rgb(50,174,177)";
-  export default function BigScreen({singleData})
+  export default function BigScreen({singleData,addToCartHandler,state,cartBtnState})
   {
     const toast = useToast()
 const[pincheck,setPinCheck]=useState(false)
@@ -29,12 +30,12 @@ let month=dileveryDate[2]
 let year=dileveryDate[3]
 return <Flex m="auto"  >
 {/* /left box */}
-<Box  w="50%" bg="white" display={["none","none","unset","unset","unset"]} >
+<Skeleton isLoaded={!state.loading}    w="50%" bg="white" display={["none","none","unset","unset","unset"]} >
   <MainImg url={singleData?.url} off={singleData?.off} />
-</Box>
+</Skeleton>
 
 {/* Right box */}
-<Box  w="50%" bg="white" p="2%"  display={["none","none","unset","unset","unset"]} >
+<Skeleton isLoaded={!state.loading}  w="50%" bg="white" p="2%"  display={["none","none","unset","unset","unset"]} >
   {/* 1st right */}
   <Flex
     flexDirection={"column"}
@@ -81,9 +82,8 @@ return <Flex m="auto"  >
       * Delivery charges if applicable will be applied at checkout
     </Text>
     <br />
-    <Button fontSize={["10px","10px","15px","20px","20px"]} bg={'rgb(36,174,177)'} color="white" onClick={()=>{
-                alert("add to cart functionality is pending")
-              }} >Add to Cart</Button>
+    <Button fontSize={["10px","10px","15px","20px","20px"]} bg={'rgb(36,174,177)'} color="white" onClick={addToCartHandler} >
+      {cartBtnState.loading?<Spinner/>:"Add to Cart"}</Button>
     <br />
    
   </Flex>
@@ -171,7 +171,7 @@ return <Flex m="auto"  >
     <br />
     <br />
   </Flex>
-</Box>
+</Skeleton>
 </Flex>
 
 
