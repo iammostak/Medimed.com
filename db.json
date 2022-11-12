@@ -402,5 +402,32 @@
          "img": "https://www.netmeds.com/images/category/v1/491/thumb/homeopathy_2.jpg",
          "title": "Homeopathy"
       }
+   ],
+   "popularCategoryArr": [
+      {
+         "id": 1,
+         "img": "https://www.netmeds.com/images/category/v1/3902/thumb/face_personal_care.jpg",
+         "title": "Face Personal care"
+      },
+      {
+         "id": 2,
+         "img": "https://www.netmeds.com/images/category/v1/525/thumb/body_care_1.jpg",
+         "title": "Body care"
+      },
+      {
+         "id": 3,
+         "img": "https://www.netmeds.com/images/category/v1/547/thumb/hair_care_2.jpg",
+         "title": "Hair care"
+      },
+      {
+         "id": 4,
+         "img": "https://www.netmeds.com/images/category/v1/562/thumb/oral_care.jpg",
+         "title": "Oral Care"
+      },
+      {
+         "id": 5,
+         "img": "https://www.netmeds.com/images/category/v1/3772/thumb/home_health.jpg",
+         "title": "Home & Health"
+      }
    ]
 }
