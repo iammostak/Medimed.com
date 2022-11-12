@@ -11,13 +11,6 @@ import {
    Input,
    InputGroup,
    InputLeftAddon,
-   Popover,
-   PopoverArrow,
-   PopoverBody,
-   PopoverCloseButton,
-   PopoverContent,
-   PopoverHeader,
-   PopoverTrigger,
    Text,
    useDisclosure,
 } from "@chakra-ui/react";
@@ -36,21 +29,29 @@ function Navbar() {
    const navigate = useNavigate();
    const { isOpen, onOpen, onClose } = useDisclosure();
    const dispatch = useDispatch();
-   const [name, setname] = useState("")
+   const [name, setname] = useState("dsafd")
    const { data: { firstName, imageURL } } = useSelector((store) => store.auth)
    const getData = async () => {
+      const res = await axios.get("http://localhost:8080/redisdata")
+      const { data: { email } } = res
+      console.log('email:', email)
+      localStorage.setItem("email", email)
       try {
-         const res = await axios.get("https://medimedcom-backend-production.up.railway.app/redisdata")
-         const { data: { firstName } } = res
-         setname(firstName)
+         if (!email) {
+            const data = localStorage.getItem("email")
+            const res = await axios.post("http://localhost:8080/getuser", { email: data })
+            console.log('res:', res)
+            const { firstName } = res.data[0]
+            setname(firstName)
+         }
       } catch (e) {
-         console.log(e)
+         console.log('e:', e)
+
       }
    }
-
    useEffect(() => {
       dispatch(loginAction())
-      setname(firstName)
+      // setname(firstName)
       getData()
    }, [])
 
@@ -126,7 +127,7 @@ function Navbar() {
                leftIcon={imageURL ? <Image src={imageURL} borderRadius={"full"} boxSize={"7"} /> : <FaUserCircle size={22} />}
                variant={"none"}
             >
-               {!name ? "Sign in / Sign up" : name}
+               {!firstName ? "Sign in / Sign up" : firstName}
             </Button>
          </HStack>
          <Button
@@ -145,9 +146,7 @@ function Navbar() {
       </Flex>
    );
 }
-
 export default Navbar;
-
 function InputLeftChild() {
    return (
       <HStack align={"center"}>

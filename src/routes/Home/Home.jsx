@@ -24,6 +24,8 @@ import {
    newOnMedimedArr,
    topBrandArr,
    focusArr,
+   trendingTodayArr,
+   shopByCategoryArr,
 } from "../../../db.json";
 import HeaderComp from "./HeaderComp";
 import OfferCard from "./OfferCard";
@@ -39,6 +41,7 @@ import RefillCard from "./RefillCard";
 import HealthConcernCard from "./HealthConcernCard";
 import TopBrandCard from "./TopBrandCard";
 import MembershipCard from "./MembershipCard";
+import CardSlider from "./CardSlider";
 
 function Home() {
    return (
@@ -124,19 +127,32 @@ function Home() {
             <PreviousOrder />
             <BeautyComp />
          </Flex>
-         <BGHeading heading="New on Medimed" color="#32aeb0" height="170">
+         <BGHeading heading="Trending Today" color="#32aeb0" height="170">
+            <CardSlider item={trendingTodayArr} />
+            <Heading
+               py={5}
+               w={"full"}
+               align={"left"}
+               fontSize={{ base: "xl", md: "2xl" }}
+               fontFamily={"sans-serif"}
+            >
+               Shop by Category
+            </Heading>
             <Flex
                w={"full"}
-               gap={4}
+               pb={10}
                zIndex={1}
+               gap={{ base: 3, lg: 6 }}
+               justify={"center"}
                direction={{ base: "column", md: "row" }}
             >
-               {newOnMedimedArr.map((item) => (
-                  <Box w={{ base: "100%", md: "33%" }}>
-                     <Image src={item.img} borderRadius={"lg"} />
-                  </Box>
+               {shopByCategoryArr.map((item) => (
+                  <ExploreBeautyCard key={item.id} {...item} />
                ))}
             </Flex>
+         </BGHeading>
+         <BGHeading heading="New on Medimed" color="#32aeb0" height="170">
+            <CardSlider item={newOnMedimedArr} />
             <Heading
                py={5}
                w={"full"}

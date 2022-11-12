@@ -9,7 +9,10 @@ import {
   Image,
   Button,
   color,
+  useToast,
+  Spinner,
 } from "@chakra-ui/react";
+
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { BsFillHeartFill, BsArrowRightCircleFill } from "react-icons/bs";
@@ -32,25 +35,70 @@ return d
 
 export default function SingleProduct() {
   const[singleData,setSingleData]=useState({})
-const {id}=useParams()
+  const {id}=useParams()
+  const[state,setState]=useState({
+    loading:false,
+    error:false,
+    success:false
+  })
+  const[cartBtnState,cartBtnSetState]=useState({
+    loading:false,
+    error:false,
+    success:false
+  })
+  const toast=useToast()
 
+
+  
 useEffect(()=>{
-
+  setState({...state,loading:true,error:false,success:false})
   getData(id).then((res)=>{
     console.log(res.data)
     setSingleData({...res.data})
+    setState({...state,loading:false,error:false,success:true})
+  }).catch((e)=>{
+    setState({...state,loading:false,error:true,success:false})
   })
-console.log(id)
+
 
 },[id])
+
+
+///add to cart locic front end
+const addToCartHandler=async()=>{
+  cartBtnSetState({...cartBtnState,loading:true,error:false,success:false})
+try{
+
+  let d=await axios.post("http://localhost:8080/carts/create",{
+    productId:"636d4b3d872fb705cc37d0b0"
+  })
+  console.log(d)
+  cartBtnSetState({...cartBtnState,loading:false,error:false,success:true})
+  toast({
+    title: `Congratulation Items added in cart`,
+    status: "success",
+    isClosable: true,
+  })
+}catch(e){
+  console.log(e.message)
+  cartBtnSetState({...cartBtnState,loading:false,error:true,success:false})
+  toast({
+    title: `Something went wrong`,
+    status: "error",
+    isClosable: true,
+  })
+}
+
+
+}
 
   return (
     <Box  m="auto"  bg="#f3f6fb" >
       
- 
-      <MobileView singleData={singleData} />
+
+      <MobileView singleData={singleData} addToCartHandler={addToCartHandler} state={state} cartBtnState={cartBtnState} />
       <Box w="95%" m="auto"  >
-        <BigScreen singleData={singleData}  />
+        <BigScreen singleData={singleData} addToCartHandler={addToCartHandler} state={state} cartBtnState={cartBtnState}  />
         {/* 1ts step end here */}
         <br />
         <br />
@@ -210,9 +258,10 @@ console.log(id)
               </Box> */}
             </Box>
 
-            <Button bg="rgb(36,174,177)" color="white" fontSize={['5px',"5px","15px","20px","20px"]} maxH={["20px","20px","30px","35px","40px"]} onClick={()=>{
-                alert("add to cart functionality is pending")
-              }}>ADD TO CART</Button>
+            <Button bg="rgb(36,174,177)" color="white" fontSize={['5px',"5px","15px","20px","20px"]} maxH={["20px","20px","30px","35px","40px"]} onClick={addToCartHandler}>
+         ADD TO CART
+
+              </Button>
           </Flex>
         </Flex>
         </Box>
@@ -222,6 +271,9 @@ console.log(id)
         {/* fifth step END  here / aDD TO CART */}
         {/* ///container end  */}
       </Box>
+
+
+
     </Box>
   );
 }

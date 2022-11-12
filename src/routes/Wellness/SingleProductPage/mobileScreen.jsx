@@ -11,6 +11,7 @@ import {
     color,
     useToast,
     Spinner,
+    Skeleton,
   } from "@chakra-ui/react";
 import { useState } from "react";
   import { BsFillHeartFill, BsArrowRightCircleFill } from "react-icons/bs";
@@ -19,7 +20,7 @@ import { useState } from "react";
   const mainColor = "rgb(50,174,177)";
 
 
-export default function MobileView({singleData}){
+export default function MobileView({singleData,addToCartHandler,state,cartBtnState}){
   const[pincheck,setPinCheck]=useState(false)
   const[spiner,setSpiner]=useState(false)
   const[pintext,setPintext]=useState("")
@@ -30,12 +31,12 @@ export default function MobileView({singleData}){
   let year=dileveryDate[3]
 
 return <Box w="90%" m="auto" >
-    <Box  w="50%" bg="white" display={["unset","unset","none","none","none"]} >
+    <Skeleton isLoaded={!state.loading}  w="50%" bg="white" display={["unset","unset","none","none","none"]} >
     <MainImg url={singleData?.url} off={singleData?.off} />
-          </Box> 
+          </Skeleton> 
 <br />
 
-<Box  w="100%" bg="white" p="2%" display={["unset","unset","none","none","none"]} >
+<Skeleton isLoaded={!state.loading}  w="100%" bg="white" p="2%" display={["unset","unset","none","none","none"]} >
             {/* 1st right */}
             <Flex
               flexDirection={"column"}
@@ -89,9 +90,7 @@ return <Box w="90%" m="auto" >
                 * Delivery charges if applicable will be applied at checkout
               </Text>
               <br />
-              <Button fontSize={["10px","10px","15px","20px","20px"]} bg={'rgb(36,174,177)'} color="white" onClick={()=>{
-                alert("add to cart functionality is pending")
-              }} >Add to Cart</Button>
+              <Button fontSize={["10px","10px","15px","20px","20px"]} bg={'rgb(36,174,177)'} color="white" onClick={addToCartHandler} >Add to Cart</Button>
               <br />
              
             </Flex>
@@ -175,7 +174,7 @@ return <Box w="90%" m="auto" >
       </Flex>
     </Flex>
 </Flex>
-</Box>
+</Skeleton>
 </Box>
 
 
