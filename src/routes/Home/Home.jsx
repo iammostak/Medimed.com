@@ -143,6 +143,7 @@ function Home() {
                pb={10}
                zIndex={1}
                gap={{ base: 3, lg: 6 }}
+               justify={"center"}
                direction={{ base: "column", md: "row" }}
             >
                {shopByCategoryArr.map((item) => (
