@@ -12,19 +12,33 @@ import {
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
 
 
 const Payment = () => {
-    const payment = useSelector((store) => store)
+    const {discount,  price, total} = useSelector((store) => store.paymentState)
+
+        
+       
+        
+        
     const [flag, setFlag] = useState(false);
     const [check, setCheck] = useState(false);
     console.log(check);
 
-    let PaymentData = JSON.parse(localStorage.getItem("Price")) || "";
-    let DiscountPrice = JSON.parse(localStorage.getItem("DiscountPrice")) || "";
+     let PaymentData = JSON.parse(localStorage.getItem("Price")) || "";
+     let DiscountPrice = JSON.parse(localStorage.getItem("DiscountPrice")) || "";
+    // const { shippingInfo, cartItems } = useSelector((state) => state.cart);
+    // const { user } = useSelector((state) => state.user);
+    // const { error } = useSelector((state) => state.newOrder);
+    // // const dispatch = useDispatch();
+    // const alert = useAlert();
+    // const stripe = useStripe();
+    // const elements = useElements();
+    // const payBtn = useRef(null);
 
-    console.log(PaymentData);
-    console.log(DiscountPrice);
+     //console.log(payment);
+    // console.log(DiscountPrice);
 
     const navigate = useNavigate();
 
@@ -515,7 +529,7 @@ const Payment = () => {
                                 display={"flex"}
                             >
                                 <Text> MRP Total</Text>
-                                <Text>Rs,{PaymentData}</Text>
+                                <Text>Rs,{price}</Text>
                             </Box>
                             <Box
                                 fontSize={"sm"}
@@ -524,7 +538,7 @@ const Payment = () => {
                                 display={"flex"}
                             >
                                 <Text> Nedmeds Discount</Text>
-                                <Text>-Rs,75.00</Text>
+                                <Text>-Rs{discount}</Text>
                             </Box>
                             <Box
                                 fontSize={"sm"}
@@ -534,7 +548,7 @@ const Payment = () => {
                                 display={"flex"}
                             >
                                 <Text>Total Amount*</Text>
-                                <Text>Rs,{DiscountPrice}</Text>
+                                <Text>Rs,{total}</Text>
                             </Box>
                             <Box
                                 bg={"#F3F8EC"}
@@ -546,7 +560,7 @@ const Payment = () => {
                                 display={"flex"}
                             >
                                 <Text pl={1} color={"green"}>
-                                    TOTAL SAVINGS Rs.75
+                                    TOTAL SAVINGS -Rs{discount}
                                 </Text>
                             </Box>
 
@@ -560,7 +574,7 @@ const Payment = () => {
                             >
                                 <Box>
                                     <Text fontSize={"xs"}>TOTAL AMOUNT </Text>
-                                    <Text fontSize={"larger"}>Rs,{DiscountPrice}</Text>
+                                    <Text fontSize={"larger"}>Rs,{total}</Text>
                                 </Box>
 
                                 <Box>
