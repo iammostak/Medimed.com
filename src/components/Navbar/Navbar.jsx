@@ -17,12 +17,12 @@ import {
    useDisclosure,
 } from "@chakra-ui/react";
 import Medimed from "../../assets/logos/Medimed.com-navbar-removebg.png";
-import { MdShoppingCart } from "react-icons/md";
+import { MdHealthAndSafety, MdShoppingCart } from "react-icons/md";
 import { FaUserCircle } from "react-icons/fa";
 import { IoChevronDown } from "react-icons/io5";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector, } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginAction } from "../../store/MainAuth/AuthActions";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -31,31 +31,39 @@ function Navbar() {
    const navigate = useNavigate();
    const { isOpen, onOpen, onClose } = useDisclosure();
    const dispatch = useDispatch();
-   const [name, setname] = useState("dsafd")
-   const { data: { firstName, imageURL } } = useSelector((store) => store.auth)
+   const [name, setName] = useState("Pablo Escobar");
+   const {
+      data: { firstName, imageURL },
+   } = useSelector((store) => store.auth);
    const getData = async () => {
-      const res = await axios.get("https://medimedcom-backend-production.up.railway.app/redisdata")
-      const { data: { email } } = res
-      console.log('email:', email)
-      localStorage.setItem("email", email)
+      const res = await axios.get(
+         "https://medimedcom-backend-production.up.railway.app/redisdata"
+      );
+      const {
+         data: { email },
+      } = res;
+      console.log("email:", email);
+      localStorage.setItem("email", email);
       try {
          if (!email) {
-            const data = localStorage.getItem("email")
-            const res = await axios.post("https://medimedcom-backend-production.up.railway.app/getuser", { email: data })
-            console.log('res:', res)
-            const { firstName } = res.data[0]
-            setname(firstName)
+            const data = localStorage.getItem("email");
+            const res = await axios.post(
+               "https://medimedcom-backend-production.up.railway.app/getuser",
+               { email: data }
+            );
+            console.log("res:", res);
+            const { firstName } = res.data[0];
+            setName(firstName);
          }
       } catch (e) {
-         console.log('e:', e)
-
+         console.log("e:", e);
       }
-   }
+   };
    useEffect(() => {
-      dispatch(loginAction())
-      // setname(firstName)
-      getData()
-   }, [])
+      dispatch(loginAction());
+      // setName(firstName)
+      getData();
+   }, []);
 
    return (
       <Flex
@@ -126,10 +134,20 @@ function Navbar() {
             <Button
                as={NavLink}
                to={"/login"}
-               leftIcon={imageURL ? <Image src={imageURL} borderRadius={"full"} boxSize={"7"} /> : <FaUserCircle size={22} />}
+               leftIcon={
+                  imageURL ? (
+                     <Image
+                        src={imageURL}
+                        borderRadius={"full"}
+                        boxSize={"7"}
+                     />
+                  ) : (
+                     <FaUserCircle size={22} />
+                  )
+               }
                variant={"none"}
             >
-               {!firstName ? "Sign in / Sign up" : firstName}
+               {firstName ? firstName : "Sign in / Sign up"}
             </Button>
          </HStack>
          <Button
@@ -148,10 +166,25 @@ function Navbar() {
                      src={
                         "https://raw.githubusercontent.com/iammostak/adhesive-legs-8944/2d3100a8c566459a2318b125206669e5ae3ee42b/src/assets/logos/Medimed.com-navbar.png"
                      }
+                     onClick={() => navigate("/")}
                   />
                </DrawerHeader>
                <DrawerBody>
-                  <Box w={"full"} mb={4}>
+                  <Box w={"full"} mb={3}>
+                     <Button
+                        w={"full"}
+                        size={"lg"}
+                        as={NavLink}
+                        to={"/cart"}
+                        bg={"#32AEB0"}
+                        color={"white"}
+                        letterSpacing={1}
+                        leftIcon={<MdShoppingCart size={24} />}
+                     >
+                        Cart
+                     </Button>
+                  </Box>
+                  <Box w={"full"} mb={3}>
                      <Button
                         w={"full"}
                         size={"lg"}
@@ -160,11 +193,12 @@ function Navbar() {
                         bg={"#32AEB0"}
                         color={"white"}
                         letterSpacing={1}
+                        leftIcon={<MdHealthAndSafety size={24} />}
                      >
                         Wellness
                      </Button>
                   </Box>
-                  <Box w={"full"} mb={4}>
+                  <Box>
                      <Button
                         w={"full"}
                         size={"lg"}
@@ -173,8 +207,20 @@ function Navbar() {
                         bg={"#32AEB0"}
                         color={"white"}
                         letterSpacing={1}
+                        leftIcon={
+                           imageURL ? (
+                              <Image
+                                 src={imageURL}
+                                 borderRadius={"full"}
+                                 boxSize={"7"}
+                              />
+                           ) : (
+                              <FaUserCircle size={22} />
+                           )
+                        }
+                        variant={"none"}
                      >
-                        Sign in / Sign up
+                        {firstName ? firstName : "Sign in / Sign up"}
                      </Button>
                   </Box>
                </DrawerBody>
