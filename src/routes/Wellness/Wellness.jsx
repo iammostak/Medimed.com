@@ -42,7 +42,7 @@ function Wellness() {
             // cartBtnSetState({...cartBtnState,loading:true,error:false,success:false})
           try{
           
-            let d=await axios.post("http://localhost:8080/carts/create",{
+            let d=await axios.post("https://medimedcom-backend-production.up.railway.app/carts/create",{
               productId:id
             })
             console.log(d)
