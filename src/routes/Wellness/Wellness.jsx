@@ -17,7 +17,7 @@ import ExploreBeautyCard from "../Home/ExploreBeautyCard"
 const getCartData = async () => {
    //const toast = useToast()
    // https://medimedcom-backend-production.up.railway.app/products
-   let data = await axios.get("https://medimedcom-backend-production.up.railway.app/products");
+   let data = await axios.get("http://localhost:8080/products");
    return data;
  };
 function Wellness() {
@@ -42,7 +42,7 @@ function Wellness() {
             // cartBtnSetState({...cartBtnState,loading:true,error:false,success:false})
           try{
           
-            let d=await axios.post("https://medimedcom-backend-production.up.railway.app/carts/create",{
+            let d=await axios.post("http://localhost:8080/carts/create",{
               productId:id
             })
             console.log(d)

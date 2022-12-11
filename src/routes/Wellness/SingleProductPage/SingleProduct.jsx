@@ -26,9 +26,7 @@ import ReviewModal from "./reviewModal";
 const mainColor = "rgb(50,174,177)";
 // https://medimedcom-backend-production.up.railway.app/
 const getData = async (id) => {
-  let d = await axios.get(
-    `https://medimedcom-backend-production.up.railway.app/products/single/${id}`
-  );
+  let d = await axios.get(`http://localhost:8080/products/single/${id}`);
   // let d=await axios.get(`https://netmeds-new-api.herokuapp.com/products/${id}`)
 
   return d;
