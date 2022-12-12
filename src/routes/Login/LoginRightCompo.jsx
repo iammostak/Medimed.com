@@ -3,7 +3,6 @@ import {
   Button,
   Flex,
   Heading,
-  Image,
   Input,
   Text,
   Center,
@@ -11,14 +10,14 @@ import {
   Avatar,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-
+import { GoogleLogin } from "react-google-login";
 import { FaFacebookSquare } from "react-icons/fa";
 import RightConditionRightCompo from "./RightCompoRightCondition";
 import { useUserAuth } from "./Context";
-import axios from "axios";
-
+const clientid = import.meta.env.VITE_CLIENT_ID;
 import { loginAction } from "../../store/MainAuth/AuthActions";
 import { useDispatch, useSelector } from "react-redux";
+import { gapi } from "gapi-script";
 function LoginRightCompo() {
   const { setupRecaptcha } = useUserAuth();
   const [phnumber, setphnumber] = useState("+91");
@@ -27,7 +26,6 @@ function LoginRightCompo() {
   const [redisbool, setredisbool] = useState(false);
   const [loading, setloading] = useState(false);
   const { data } = useSelector((store) => store.auth);
-
   const dispatch = useDispatch();
   const getOtp = async () => {
     try {
@@ -49,14 +47,21 @@ function LoginRightCompo() {
     setloading(true);
     try {
       let data = await result.confirm(main);
-      // setloading(false)
-      // console.log(data);
-      // here OTP data
     } catch (error) {
       alert(error.message);
     }
   };
-  const googleAuth = () => {
+  useEffect(() => {
+    function start() {
+      gapi.client.init({
+        clientid: clientid,
+        scope: "",
+      });
+    }
+    gapi.load("client:auth2", start);
+  });
+
+  const googleAuth = async () => {
     // setredisbool(true);
     window.open("http://localhost:4000/auth/google", "_self");
   };
@@ -69,7 +74,13 @@ function LoginRightCompo() {
       window.location.reload();
     }
   };
+  const onSuccess = async (res) => {
+    console.log(res.profileObj);
+  };
 
+  const onFailure = async (res) => {
+    console.log(res);
+  };
   return (
     <>
       {data.firstName ? (
@@ -157,7 +168,7 @@ function LoginRightCompo() {
           </Box>
         </Center>
       ) : !bool ? (
-        <Box w={["300", "420px", "490px", "520px"]} >
+        <Box w={["300", "420px", "490px", "520px"]}>
           <Flex
             direction={"column"}
             align="start"
@@ -174,10 +185,9 @@ function LoginRightCompo() {
               PHONE NUMBER
             </Text>
             {/* <InputGroup>
-                            <InputLeftAddon children='+91' defaultValue={"+91"} />
-
-                            <Input type={"text"} onChange={(e) => setphnumber(e.target.value)} value={phnumber} placeholder="Enter your mobile no" />
-                        </InputGroup> */}
+                <InputLeftAddon children='+91' defaultValue={"+91"} />
+            <Input type={"text"} onChange={(e) => setphnumber(e.target.value)} value={phnumber} placeholder="Enter your mobile no" />
+            </InputGroup> */}
             <Input
               type={"text"}
               onChange={(e) => setphnumber(e.target.value)}
@@ -197,7 +207,7 @@ function LoginRightCompo() {
               USE OTP
             </Button>
             <Flex gap={"20"} width={"100%"} justify={"space-between"}>
-              <Button
+              {/* <Button
                 size={"md"}
                 onClick={googleAuth}
                 bg={"white"}
@@ -210,16 +220,23 @@ function LoginRightCompo() {
                   mr={"2.5"}
                   h={"6"}
                   src="https://i.ibb.co/yPYCXhz/googel.png"
-                ></Image>{" "}
+                ></Image>
                 Google
-              </Button>
+              </Button> */}
+              <GoogleLogin
+                clientId={clientid}
+                buttonText="Google"
+                onSuccess={onSuccess}
+                onFailure={onFailure}
+                cookiePolicy="single_host_origin"
+                isSignedIn={true}
+              />
 
               <Button
                 size={"md"}
-                // onClick={handleGoogleSignIn}
                 bg={"white"}
                 border={"1px solid gray"}
-                w={"50%"}
+                w={"30%"}
                 color={"#767676"}
                 fontWeight={"bold"}
               >

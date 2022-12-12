@@ -47,7 +47,7 @@ import CardSlider from "./CardSlider";
 function Home() {
   return (
     <Container
-      color={"black"}
+     
       minH={"100vh"}
       maxW={"container"}
       p={0}
