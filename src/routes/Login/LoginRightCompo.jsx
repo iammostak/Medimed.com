@@ -18,6 +18,7 @@ const clientid = import.meta.env.VITE_CLIENT_ID;
 import { loginAction } from "../../store/MainAuth/AuthActions";
 import { useDispatch, useSelector } from "react-redux";
 import { gapi } from "gapi-script";
+import axios from "axios";
 function LoginRightCompo() {
   const { setupRecaptcha } = useUserAuth();
   const [phnumber, setphnumber] = useState("+91");
@@ -75,7 +76,23 @@ function LoginRightCompo() {
     }
   };
   const onSuccess = async (res) => {
-    console.log(res.profileObj);
+    
+    const { givenName, familyName, email, imageUrl } = res.profileObj;
+    try {
+      const res = await axios.post("http://localhost:8080/postUserViaForm", {
+        firstName: givenName,
+        lastName: familyName,
+        email: email,
+        imageURL: imageUrl,
+      });
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+    //   firstName: { type: String, required: true },
+    //  lastName: { type: String, required: true },
+    //  email: { type: String, required: true },
+    //  imageURL: String
   };
 
   const onFailure = async (res) => {
