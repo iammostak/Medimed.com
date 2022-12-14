@@ -13,6 +13,14 @@ import {
   PinInput,
   PinInputField,
   Image,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
@@ -27,69 +35,59 @@ import { gapi } from "gapi-script";
 import axios from "axios";
 function LoginRightCompo() {
   const [otp, setotp] = useState("");
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const { setupRecaptcha } = useUserAuth();
   const [phnumber, setphnumber] = useState("+91");
+
   const [result, setresult] = useState();
-  const [bool, setbool] = useState(true);
+
   const [redisbool, setredisbool] = useState(false);
   const [loading, setloading] = useState(false);
   const { data } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
   const toast = useToast();
   const getOtp = async () => {
+    setloading(true);
     try {
       const res = await setupRecaptcha(phnumber);
       setresult(res);
       setphnumber("");
+      setloading(false);
     } catch (error) {
       alert(error.message);
     }
   };
-  useEffect(() => {
-    setbool(!bool);
-  }, [result]);
+
   useEffect(() => {
     dispatch(loginAction());
   }, [redisbool]);
 
-  const verifyOtp = async (main) => {
+  const verifyOtp = async () => {
     setloading(true);
+    console.log("confirm");
     try {
-      let data = await result.confirm(main);
+      let data = await result.confirm(otp);
+      onClose();
+      setloading(false);
     } catch (error) {
-      alert(error.message);
+      console.log(error.message);
     }
   };
   useEffect(() => {
-    function start() {
-      console.log("hey i am running");
-      gapi.client.init({
-        clientid: clientid,
-        scope: "",
-      });
-    }
-    gapi.load("client:auth2", start);
+    // function start() {
+    //   gapi.client.init({
+    //     clientid: clientid,
+    //     scope: "",
+    //   });
+    // }
+    // gapi.load("client:auth2", start);
   });
 
   // const googleAuth = async () => {
   //   // setredisbool(true);
   //   window.open("http://localhost:4000/auth/google", "_self");
   // };
-  const handleLogout = async () => {
-    try {
-      localStorage.removeItem("lol");
-      // window.location.reload();
-      toast({
-        title: "Logout successfull",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
-    } catch (error) {
-      // window.location.reload();
-      console.log(error.message);
-    }
-  };
+
   const onSuccess = async (res) => {
     const { givenName, familyName, email, imageUrl } = res.profileObj;
 
@@ -124,6 +122,17 @@ function LoginRightCompo() {
 
   const onFailure = async (res) => {
     console.log(res);
+  };
+  // const check = async () => {
+  //   try {
+  //     let res = await
+  //     console.log("res:", res);
+  //   } catch (error) {
+  //     console.log(res);
+  //   }
+  // };
+  const onsubmit = () => {
+    getOtp().then(() => onOpen());
   };
   return (
     <>
@@ -161,39 +170,48 @@ function LoginRightCompo() {
             width={"100%"}
             isLoading={loading ? true : false}
             bg={"#24AEB1"}
-            onClick={getOtp}
+            onClick={onsubmit}
           >
-            USE OTP
+            GET OTP
           </Button>
-          <Text fontSize={"sm"}>VERIFYING NUMBER</Text>
-          <Text>{`We have sent 6 digit OTP on ${phnumber}`}</Text>
-          <HStack gap={[2, 3, 5, 6]}>
-            <PinInput otp size={"lg"} placeholder={"."} onChange={setotp}>
-              <PinInputField />
-              <PinInputField />
-              <PinInputField />
-              <PinInputField />
-              <PinInputField />
-              <PinInputField />
-            </PinInput>
-          </HStack>
+          <Modal isOpen={isOpen} onClose={onClose}>
+            <ModalOverlay />
+            <ModalContent>
+              <ModalHeader>Modal Title</ModalHeader>
+              <ModalCloseButton />
+              <ModalBody>
+                <Text fontSize={"sm"}>VERIFYING NUMBER</Text>
+                <Text>{`We have sent 6 digit OTP on ${phnumber}`}</Text>
+                <HStack gap={[2, 3, 5, 6]}>
+                  <PinInput otp size={"lg"} placeholder={"."} onChange={setotp}>
+                    <PinInputField />
+                    <PinInputField />
+                    <PinInputField />
+                    <PinInputField />
+                    <PinInputField />
+                    <PinInputField />
+                  </PinInput>
+                </HStack>
+              </ModalBody>
+
+              <ModalFooter>
+                <Button colorScheme="blue" mr={3} onClick={onClose}>
+                  Close
+                </Button>
+                <Button
+                  color={"white"}
+                  size={"lg"}
+                  width={"100%"}
+                  isLoading={loading ? true : false}
+                  bg={"#24AEB1"}
+                  onClick={() => verifyOtp()}
+                >
+                  GET OTP
+                </Button>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
           <Flex gap={"20"} width={"100%"} justify={"space-between"}>
-            {/* <Button
-              size={"md"}
-              onClick={googleAuth}
-              bg={"white"}
-              border={"1px solid grey"}
-              w={"50%"}
-              color={"#767676"}
-              fontWeight={"bold"}
-            >
-              <Image
-                mr={"2.5"}
-                h={"6"}
-                src="https://i.ibb.co/yPYCXhz/googel.png"
-              ></Image>
-              Google
-            </Button> */}
             <GoogleLogin
               clientId={clientid}
               render={(renderProps) => (
@@ -218,7 +236,6 @@ function LoginRightCompo() {
               buttonText="Google"
               onSuccess={onSuccess}
               onFailure={onFailure}
-              // cookiePolicy="single_host_origin"
               isSignedIn={false}
             />
 
