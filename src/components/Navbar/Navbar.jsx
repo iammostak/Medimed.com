@@ -13,9 +13,17 @@ import {
   Input,
   InputGroup,
   InputLeftAddon,
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverContent,
+  PopoverTrigger,
+  Portal,
   Text,
   useDisclosure,
+  VStack,
 } from "@chakra-ui/react";
+const clientid = import.meta.env.VITE_CLIENT_ID;
 import Medimed from "../../assets/logos/Medimed.com-navbar-removebg.png";
 import { MdHealthAndSafety, MdShoppingCart } from "react-icons/md";
 import { FaUserCircle } from "react-icons/fa";
@@ -26,6 +34,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginAction } from "../../store/MainAuth/AuthActions";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { GoogleLogout } from "react-google-login";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -41,7 +50,11 @@ function Navbar() {
     // setName(firstName)
     //  getData();
   }, []);
-
+  const logout = async () => {
+    console.log("logout");
+    localStorage.removeItem("lol");
+    window.location.reload();
+  };
   return (
     <Flex
       bg={"#32aeb0"}
@@ -108,7 +121,87 @@ function Navbar() {
             0
           </Box>
         </Button>
-        <Button
+        <Popover trigger="hover" size={"lg"}>
+          <PopoverTrigger>
+            <Button
+              variant={"none"}
+              leftIcon={
+                <Image src={imageURL} boxSize={"6"} borderRadius={"full"} />
+              }
+            >
+              {firstName ? firstName : "Sign in / Sign up"}
+            </Button>
+          </PopoverTrigger>
+          <Portal>
+            <PopoverContent bg={"#32AEB0"} color={"white"}>
+              <PopoverBody>
+                {firstName ? (
+                  <VStack>
+                    <Button
+                      variant={"none"}
+                      bg={"#24AEB1"}
+                      onClick={() => navigate("/profile")}
+                    >
+                      Profile
+                    </Button>
+                    <Button
+                      // onClick={handleLogout}
+                      variant={"none"}
+                      bg={"#24AEB1"}
+                    >
+                      <GoogleLogout
+                        render={(renderProps) => (
+                          <button
+                            onClick={renderProps.onClick}
+                            disabled={renderProps.disabled}
+                          >
+                           <Text>Logout</Text> 
+                          </button>
+                        )}
+                        clientId={clientid}
+                        buttonText="Logout"
+                        onLogoutSuccess={logout}
+                      />
+                    </Button>
+                  </VStack>
+                ) : (
+                  <VStack>
+                    <Button variant={"none"} onClick={() => navigate("/login")}>
+                      Login
+                    </Button>
+                    <Button
+                      variant={"none"}
+                      onClick={() => navigate("/signup")}
+                    >
+                      Sign up
+                    </Button>
+                  </VStack>
+                )}
+
+                {/* <Button
+                           as={NavLink}
+                           to={"/login"}
+                           leftIcon={
+                              imageURL ? (
+                                 <Image
+                                    src={imageURL}
+                                    borderRadius={"full"}
+                                    boxSize={"7"}
+                                 />
+                              ) : (
+                                 <FaUserCircle size={22} />
+                              )
+                           }
+                           variant={"none"}
+                        >
+                           {firstName ? firstName : "Sign in / Sign up"}
+                        </Button>
+                        */}
+              </PopoverBody>
+            </PopoverContent>
+          </Portal>
+        </Popover>
+        {/* <Button
           as={NavLink}
           to={"/login"}
           leftIcon={
@@ -117,7 +210,7 @@ function Navbar() {
           variant={"none"}
         >
           {firstName ? firstName : "Sign in / Sign up"}
-        </Button>
+        </Button> */}
       </HStack>
       <Button
         display={{ base: "flex", md: "none" }}

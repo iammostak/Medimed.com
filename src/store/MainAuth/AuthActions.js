@@ -4,14 +4,16 @@ import { LOGIN_FAILURE, LOGIN_SUCCESS } from "./AuthTypes";
 export const loginAction = () => async (dispatcher) => {
   try {
     const data = localStorage.getItem("lol");
+    console.log('data:', data)
     const res = await axios.post("http://localhost:8080/getuser", {
       email: data,
     });
-    console.log("res:", res);
-    dispatcher({
+
+     dispatcher({
       type: LOGIN_SUCCESS,
       payload: res.data,
     });
+    return data
   } catch (error) {
     return error.message;
   }

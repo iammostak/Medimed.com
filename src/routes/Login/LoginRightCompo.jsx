@@ -11,13 +11,16 @@ import {
   useToast,
   HStack,
   PinInput,
+  PinInputField,
+  Image,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { GoogleLogin } from "react-google-login";
+import { GoogleLogin, GoogleLogout } from "react-google-login";
 import { FaFacebookSquare } from "react-icons/fa";
 import RightConditionRightCompo from "./RightCompoRightCondition";
 import { useUserAuth } from "./Context";
 const clientid = import.meta.env.VITE_CLIENT_ID;
+
 import { loginAction } from "../../store/MainAuth/AuthActions";
 import { useDispatch, useSelector } from "react-redux";
 import { gapi } from "gapi-script";
@@ -59,6 +62,7 @@ function LoginRightCompo() {
   };
   useEffect(() => {
     function start() {
+      console.log("hey i am running");
       gapi.client.init({
         clientid: clientid,
         scope: "",
@@ -97,10 +101,11 @@ function LoginRightCompo() {
         imageURL: imageUrl,
       });
 
+      console.log("res:", res);
       localStorage.setItem("lol", email);
-      dispatch(loginAction());
+
       setredisbool(!redisbool);
-      setbool(!bool);
+      // setbool(!bool);
       toast({
         title: "Login successfull",
         status: "success",
@@ -122,132 +127,45 @@ function LoginRightCompo() {
   };
   return (
     <>
-      {
-      // data.firstName ? (
-        // <Center w={"90%"} h={"60%"}>
-        //   <Box
-        //     height={"100%"}
-        //     w={"100%"}
-        //     rounded={"lg"}
-        //     p={6}
-        //     textAlign={"center"}
-        //   >
-        //     <Avatar
-        //       size={"xl"}
-        //       src={data.imageURL}
-        //       alt={"Avatar Alt"}
-        //       mb={4}
-        //       pos={"relative"}
-        //       _after={{
-        //         content: '""',
-        //         w: 4,
-        //         h: 4,
-        //         bg: "green.300",
-        //         border: "2px solid white",
-        //         rounded: "full",
-        //         pos: "absolute",
-        //         bottom: 0,
-        //         right: 3,
-        //       }}
-        //     />
-        //     <Heading fontSize={"2xl"} fontFamily={"body"}>
-        //       {data.firstName}
-        //     </Heading>
-        //     <Text fontWeight={600} color={"gray.500"} mb={4}>
-        //       {data.email}
-        //     </Text>
-        //     <Stack mt={8} direction={"row"} spacing={4}>
-        //       <Button
-        //         flex={1}
-        //         fontSize={"sm"}
-        //         rounded={"full"}
-        //         _focus={{
-        //           bg: "gray.200",
-        //         }}
-        //       >
-        //         My Cart Items
-        //       </Button>
-        //       <Button
-        //         flex={1}
-        //         fontSize={"md"}
-        //         rounded={"full"}
-        //         bg={"blue.400"}
-        //         color={"white"}
-        //         boxShadow={
-        //           "0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)"
-        //         }
-        //         _hover={{
-        //           bg: "blue.500",
-        //         }}
-        //         _focus={{
-        //           bg: "blue.500",
-        //         }}
-        //       >
-        //         Contact
-        //       </Button>
-        //       <Button
-        //         flex={1}
-        //         fontSize={"md"}
-        //         rounded={"full"}
-        //         onClick={handleLogout}
-        //         bg={"blue.400"}
-        //         color={"white"}
-        //         boxShadow={
-        //           "0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)"
-        //         }
-        //         _hover={{
-        //           bg: "blue.500",
-        //         }}
-        //         _focus={{
-        //           bg: "blue.500",
-        //         }}
-        //       >
-        //         Log Out
-        //       </Button>
-        //     </Stack>
-        //   </Box>
-        // </Center>
-      // ) : !bool ? (
-        
-        <Box w={["300", "420px", "490px", "520px"]}>
-          <Flex
-            direction={"column"}
-            align="start"
-            p={["2", "5", "6", "8"]}
-            gap={"5"}
+      <Box w={["300", "420px", "490px", "520px"]}>
+        <Flex
+          direction={"column"}
+          align="start"
+          p={["2", "5", "6", "8"]}
+          gap={"5"}
+        >
+          <Heading size={"md"}>Sign In/Sign Up</Heading>
+          <Text align={"start"}>
+            Sign up or Sign in to access your, special offers health tips and
+            more{" "}
+          </Text>
+
+          <Text fontSize={"sm"} fontWeight={"bold"}>
+            PHONE NUMBER
+          </Text>
+          {/* <InputGroup>
+              <InputLeftAddon children='+91' defaultValue={"+91"} />
+          <Input type={"text"} onChange={(e) => setphnumber(e.target.value)} value={phnumber} placeholder="Enter your mobile no" />
+          </InputGroup> */}
+          <Input
+            type={"text"}
+            onChange={(e) => setphnumber(e.target.value)}
+            value={phnumber}
+            placeholder="Enter your mobile no"
+          />
+
+          <div id="recaptcha-container" />
+          <Button
+            color={"white"}
+            size={"lg"}
+            width={"100%"}
+            isLoading={loading ? true : false}
+            bg={"#24AEB1"}
+            onClick={getOtp}
           >
-            <Heading size={"md"}>Sign In/Sign Up</Heading>
-            <Text align={"start"}>
-              Sign up or Sign in to access your, special offers health tips and
-              more{" "}
-            </Text>
-
-            <Text fontSize={"sm"} fontWeight={"bold"}>
-              PHONE NUMBER
-            </Text>
-            {/* <InputGroup>
-                <InputLeftAddon children='+91' defaultValue={"+91"} />
-            <Input type={"text"} onChange={(e) => setphnumber(e.target.value)} value={phnumber} placeholder="Enter your mobile no" />
-            </InputGroup> */}
-            <Input
-              type={"text"}
-              onChange={(e) => setphnumber(e.target.value)}
-              value={phnumber}
-              placeholder="Enter your mobile no"
-            />
-
-            <div id="recaptcha-container" />
-            <Button
-              color={"white"}
-              size={"lg"}
-              width={"100%"}
-              isLoading={loading ? true : false}
-              bg={"#24AEB1"}
-              onClick={getOtp}
-            >
-              USE OTP
-            </Button>
-            <Text fontSize={"sm"}>VERIFYING NUMBER</Text>
+            USE OTP
+          </Button>
+          <Text fontSize={"sm"}>VERIFYING NUMBER</Text>
           <Text>{`We have sent 6 digit OTP on ${phnumber}`}</Text>
           <HStack gap={[2, 3, 5, 6]}>
             <PinInput otp size={"lg"} placeholder={"."} onChange={setotp}>
@@ -259,53 +177,156 @@ function LoginRightCompo() {
               <PinInputField />
             </PinInput>
           </HStack>
-            <Flex gap={"20"} width={"100%"} justify={"space-between"}>
-              {/* <Button
-                size={"md"}
-                onClick={googleAuth}
-                bg={"white"}
-                border={"1px solid grey"}
-                w={"50%"}
-                color={"#767676"}
-                fontWeight={"bold"}
-              >
-                <Image
-                  mr={"2.5"}
-                  h={"6"}
-                  src="https://i.ibb.co/yPYCXhz/googel.png"
-                ></Image>
-                Google
-              </Button> */}
-              <GoogleLogin
-                clientId={clientid}
-                buttonText="Google"
-                onSuccess={onSuccess}
-                onFailure={onFailure}
-                cookiePolicy="single_host_origin"
-                isSignedIn={true}
-              />
+          <Flex gap={"20"} width={"100%"} justify={"space-between"}>
+            {/* <Button
+              size={"md"}
+              onClick={googleAuth}
+              bg={"white"}
+              border={"1px solid grey"}
+              w={"50%"}
+              color={"#767676"}
+              fontWeight={"bold"}
+            >
+              <Image
+                mr={"2.5"}
+                h={"6"}
+                src="https://i.ibb.co/yPYCXhz/googel.png"
+              ></Image>
+              Google
+            </Button> */}
+            <GoogleLogin
+              clientId={clientid}
+              render={(renderProps) => (
+                <Button
+                  size={"md"}
+                  bg={"white"}
+                  border={"1px solid grey"}
+                  w={"50%"}
+                  color={"#767676"}
+                  fontWeight={"bold"}
+                  onClick={renderProps.onClick}
+                  disabled={renderProps.disabled}
+                >
+                  <Image
+                    mr={"2.5"}
+                    h={"6"}
+                    src="https://i.ibb.co/yPYCXhz/googel.png"
+                  ></Image>
+                  <Text>Login</Text>
+                </Button>
+              )}
+              buttonText="Google"
+              onSuccess={onSuccess}
+              onFailure={onFailure}
+              // cookiePolicy="single_host_origin"
+              isSignedIn={false}
+            />
 
-              <Button
-                size={"md"}
-                bg={"white"}
-                border={"1px solid gray"}
-                w={"30%"}
-                color={"#767676"}
-                fontWeight={"bold"}
-              >
-                <Flex gap={"2"}>
-                  <FaFacebookSquare size={"20"} color={"darkblue"} />
-                  <Text>Facebook</Text>
-                </Flex>
-              </Button>
-            </Flex>
+            <Button
+              size={"md"}
+              bg={"white"}
+              border={"1px solid gray"}
+              w={"50%"}
+              color={"#767676"}
+              fontWeight={"bold"}
+            >
+              <Flex gap={"2"}>
+                <FaFacebookSquare size={"20"} color={"darkblue"} />
+                <Text>Facebook</Text>
+              </Flex>
+            </Button>
           </Flex>
-        </Box>
-      ) : (
-        <RightConditionRightCompo phnumber={phnumber} verifyOtp={verifyOtp} />
-      )}
+        </Flex>
+        {/* <RightConditionRightCompo phnumber={phnumber} verifyOtp={verifyOtp} /> */}
+      </Box>
     </>
   );
+
+  // data.firstName ? (
+  // <Center w={"90%"} h={"60%"}>
+  //   <Box
+  //     height={"100%"}
+  //     w={"100%"}
+  //     rounded={"lg"}
+  //     p={6}
+  //     textAlign={"center"}
+  //   >
+  //     <Avatar
+  //       size={"xl"}
+  //       src={data.imageURL}
+  //       alt={"Avatar Alt"}
+  //       mb={4}
+  //       pos={"relative"}
+  //       _after={{
+  //         content: '""',
+  //         w: 4,
+  //         h: 4,
+  //         bg: "green.300",
+  //         border: "2px solid white",
+  //         rounded: "full",
+  //         pos: "absolute",
+  //         bottom: 0,
+  //         right: 3,
+  //       }}
+  //     />
+  //     <Heading fontSize={"2xl"} fontFamily={"body"}>
+  //       {data.firstName}
+  //     </Heading>
+  //     <Text fontWeight={600} color={"gray.500"} mb={4}>
+  //       {data.email}
+  //     </Text>
+  //     <Stack mt={8} direction={"row"} spacing={4}>
+  //       <Button
+  //         flex={1}
+  //         fontSize={"sm"}
+  //         rounded={"full"}
+  //         _focus={{
+  //           bg: "gray.200",
+  //         }}
+  //       >
+  //         My Cart Items
+  //       </Button>
+  //       <Button
+  //         flex={1}
+  //         fontSize={"md"}
+  //         rounded={"full"}
+  //         bg={"blue.400"}
+  //         color={"white"}
+  //         boxShadow={
+  //           "0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)"
+  //         }
+  //         _hover={{
+  //           bg: "blue.500",
+  //         }}
+  //         _focus={{
+  //           bg: "blue.500",
+  //         }}
+  //       >
+  //         Contact
+  //       </Button>
+  //       <Button
+  //         flex={1}
+  //         fontSize={"md"}
+  //         rounded={"full"}
+  //         onClick={handleLogout}
+  //         bg={"blue.400"}
+  //         color={"white"}
+  //         boxShadow={
+  //           "0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)"
+  //         }
+  //         _hover={{
+  //           bg: "blue.500",
+  //         }}
+  //         _focus={{
+  //           bg: "blue.500",
+  //         }}
+  //       >
+  //         Log Out
+  //       </Button>
+  //     </Stack>
+  //   </Box>
+  // </Center>
+  // ) : !bool ? (
 }
 
 export default LoginRightCompo;
