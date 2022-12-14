@@ -11,10 +11,13 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useUserAuth } from "./Context";
 
-function RightConditionRightCompo({ phnumber, verifyOtp }) {
+function RightConditionRightCompo() {
   const [otp, setotp] = useState("");
   const [response, setresponse] = useState();
+  const [phnumber, setphnumber] = useState("+91");
+  const { setupRecaptcha } = useUserAuth();
   const [formData, setformData] = useState({
     email: "",
     firstName: "",
@@ -26,6 +29,35 @@ function RightConditionRightCompo({ phnumber, verifyOtp }) {
     const { name, value } = e.target;
     setformData({ ...formData, [name]: value });
   };
+  const getOtp = async () => {
+    try {
+      const res = await setupRecaptcha(phnumber);
+
+      setresult(res);
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+  const verifyOtp = async (main) => {
+    try {
+      let data = await result.confirm(main);
+      console.log("data:", data);
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+  const handleOTP = () => {
+    verifyOtp(otp);
+    toast({
+      title: "Login successfull",
+      description: "Welcome to Medimed",
+      status: "success",
+      duration: 1000,
+      isClosable: true,
+    });
+    navigate("/");
+  };
+  // verifyOtp(otp);
   const postUser = async () => {
     const { email, firstName, lastName } = formData;
     if (!email || !firstName || !lastName) {

@@ -31,107 +31,45 @@ import PhoneInput from "react-phone-number-input";
 
 function SignupRightCompo() {
   const toast = useToast();
-  const [spinner, setspinner] = useState(false);
-  const { setupRecaptcha } = useUserAuth();
-  const [phnumber, setphnumber] = useState("+91");
-  const [otp, setotp] = useState("");
   const [useemail, setuseemail] = useState("");
   const dispatch = useDispatch();
-  const [result, setresult] = useState();
-  const navigate = useNavigate();
+  const [response, setresponse] = useState();
   const [formData, setformData] = useState({
     email: "",
     firstName: "",
     lastName: "",
-    password: "",
-    // userid: v4(),
+    phnumber: "",
     imageURL:
-      "https://user-images.githubusercontent.com/40628582/202887621-79e9def3-55b5-4afd-b382-2561a6c915bd.jpg",
+      "https://user-images.githubusercontent.com/40628582/201342233-58862907-4a5e-41a8-9245-ee99734dd4e2.png",
   });
+
+  useEffect(() => {
+    dispatch(loginAction());
+  }, [useemail]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setformData({ ...formData, [name]: value });
   };
   const postUser = async () => {
-    const { email, firstName, lastName } = formData;
-    if (!email || !firstName || !lastName) {
+    const { email, firstName, lastName, phnumber } = formData;
+    if (!email || !firstName || !lastName || !phnumber) {
       alert("please enter all the required fields");
     }
     try {
       const res = await axios.post(
-        "https://medimed-backend.up.railway.app/postUserViaForm",
+        "http://localhost:8080/postUserViaForm",
         formData
       );
-      const {
-        data: { userid },
-      } = res;
-      localStorage.setItem("email", userid);
-      setuseemail(userid);
+      setresponse(res);
+      localStorage.setItem("lol", email);
     } catch (e) {
       alert(`rightcompo condition failed: ${e.message}`);
     }
   };
-  useEffect(() => {
-    dispatch(loginAction());
-  }, [useemail]);
-  const getOtp = async () => {
-    try {
-      const res = await setupRecaptcha(phnumber);
-
-      setresult(res);
-    } catch (error) {
-      alert(error.message);
-    }
-  };
-  const verifyOtp = async (main) => {
-    try {
-      let data = await result.confirm(main);
-      console.log("data:", data);
-    } catch (error) {
-      alert(error.message);
-    }
-  };
-
-  const handleSubmit = async () => {
-    setspinner(true);
-    const { email, firstName, lastName } = formData;
-    if (!phnumber.startsWith("+91")) {
-      toast({
-        title: "please make sure your phone number startsWith +91",
-        description: "We've sent a 6 digit OTP to your registerder number",
-        status: "warning",
-        duration: 2000,
-        isClosable: true,
-      });
-      window.location.reload();
-      return false;
-    }
-    if (!email || !firstName || !lastName) {
-      alert("please enter all the required fields");
-    } else {
-      await getOtp();
-      await postUser();
-      setspinner(false);
-      toast({
-        title: "OTP sent",
-        description: "We've sent a 6 digit OTP to your registerder number",
-        status: "success",
-        duration: 9000,
-        isClosable: true,
-      });
-    }
-  };
-
-  const handleOTP = () => {
-    verifyOtp(otp);
-    toast({
-      title: "Login successfull",
-      description: "Welcome to Medimed",
-      status: "success",
-      duration: 1000,
-      isClosable: true,
-    });
-    navigate("/");
+  const handleSubmit = () => {
+    // verifyOtp(otp);
+    postUser();
   };
 
   return (
@@ -166,19 +104,14 @@ function SignupRightCompo() {
           onChange={handleChange}
           placeholder="Enter your Last Name"
         ></Input>
-        <Text fontSize={"sm"}>VERIFYING NUMBER</Text>
-        <Text>{`We have sent 6 digit OTP on ${phnumber}`}</Text>
-        <HStack gap={[2, 3, 5, 6]}>
-          <PinInput otp size={"lg"} placeholder={"."} onChange={setotp}>
-            <PinInputField />
-            <PinInputField />
-            <PinInputField />
-            <PinInputField />
-            <PinInputField />
-            <PinInputField />
-          </PinInput>
-        </HStack>
 
+        <Text fontSize={"sm"}>PHONE NUMBER</Text>
+        <Input
+          type={"number"}
+          name={"phnumber"}
+          onChange={handleChange}
+          placeholder="Enter your Last Name"
+        ></Input>
         <Button
           onClick={handleSubmit}
           color={"white"}
@@ -186,7 +119,7 @@ function SignupRightCompo() {
           width={"100%"}
           bg={"#24AEB1"}
         >
-          VERIFY
+          Sign up
         </Button>
       </Flex>
     </Box>
