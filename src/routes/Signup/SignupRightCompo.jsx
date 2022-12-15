@@ -33,6 +33,7 @@ function SignupRightCompo() {
   const toast = useToast();
   const [useemail, setuseemail] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [response, setresponse] = useState();
   const [formData, setformData] = useState({
     email: "",
@@ -54,21 +55,37 @@ function SignupRightCompo() {
   const postUser = async () => {
     const { email, firstName, lastName, phnumber } = formData;
     if (!email || !firstName || !lastName || !phnumber) {
-      alert("please enter all the required fields");
+      toast({
+        title: `Please fill all the credentials`,
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+      });
     }
     try {
       const res = await axios.post(
-        "http://localhost:8080/postUserViaForm",
+        "http://localhost:8080/auth/postUserViaForm",
         formData
       );
       setresponse(res);
       localStorage.setItem("lol", email);
+      toast({
+        title: `Signup Successfull`,
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+      navigate("/");
     } catch (e) {
-      alert(`rightcompo condition failed: ${e.message}`);
+      toast({
+        title: `${e.message}`,
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
     }
   };
   const handleSubmit = () => {
-    // verifyOtp(otp);
     postUser();
   };
 

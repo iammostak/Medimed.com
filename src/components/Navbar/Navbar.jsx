@@ -47,8 +47,7 @@ function Navbar() {
 
   useEffect(() => {
     dispatch(loginAction());
-    // setName(firstName)
-    //  getData();
+   
   }, []);
   const logout = async () => {
     console.log("logout");

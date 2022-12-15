@@ -72,7 +72,7 @@ function LoginRightCompo() {
         user: { phoneNumber },
       } = data;
 
-      let res = await axios.post("http://localhost:8080/getViaPhonenumber", {
+      let res = await axios.post("http://localhost:8080/auth/getViaPhonenumber", {
         phnumber: phoneNumber,
       });
       if (res.status === 200) {
@@ -114,7 +114,7 @@ function LoginRightCompo() {
     const { givenName, familyName, email, imageUrl } = res.profileObj;
 
     try {
-      const res = await axios.post("http://localhost:8080/postUserViaForm", {
+      const res = await axios.post("http://localhost:8080/auth/postUserViaForm", {
         firstName: givenName,
         lastName: familyName,
         email: email,
@@ -136,7 +136,7 @@ function LoginRightCompo() {
     } catch (error) {
       toast({
         title: `${error.message}`,
-        status: "success",
+        status: "error",
         duration: 3000,
         isClosable: true,
       });
@@ -270,96 +270,12 @@ function LoginRightCompo() {
             </Button>
           </Flex>
         </Flex>
-        {/* <RightConditionRightCompo phnumber={phnumber} verifyOtp={verifyOtp} /> */}
+      
       </Box>
     </>
   );
 
-  // data.firstName ? (
-  // <Center w={"90%"} h={"60%"}>
-  //   <Box
-  //     height={"100%"}
-  //     w={"100%"}
-  //     rounded={"lg"}
-  //     p={6}
-  //     textAlign={"center"}
-  //   >
-  //     <Avatar
-  //       size={"xl"}
-  //       src={data.imageURL}
-  //       alt={"Avatar Alt"}
-  //       mb={4}
-  //       pos={"relative"}
-  //       _after={{
-  //         content: '""',
-  //         w: 4,
-  //         h: 4,
-  //         bg: "green.300",
-  //         border: "2px solid white",
-  //         rounded: "full",
-  //         pos: "absolute",
-  //         bottom: 0,
-  //         right: 3,
-  //       }}
-  //     />
-  //     <Heading fontSize={"2xl"} fontFamily={"body"}>
-  //       {data.firstName}
-  //     </Heading>
-  //     <Text fontWeight={600} color={"gray.500"} mb={4}>
-  //       {data.email}
-  //     </Text>
-  //     <Stack mt={8} direction={"row"} spacing={4}>
-  //       <Button
-  //         flex={1}
-  //         fontSize={"sm"}
-  //         rounded={"full"}
-  //         _focus={{
-  //           bg: "gray.200",
-  //         }}
-  //       >
-  //         My Cart Items
-  //       </Button>
-  //       <Button
-  //         flex={1}
-  //         fontSize={"md"}
-  //         rounded={"full"}
-  //         bg={"blue.400"}
-  //         color={"white"}
-  //         boxShadow={
-  //           "0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)"
-  //         }
-  //         _hover={{
-  //           bg: "blue.500",
-  //         }}
-  //         _focus={{
-  //           bg: "blue.500",
-  //         }}
-  //       >
-  //         Contact
-  //       </Button>
-  //       <Button
-  //         flex={1}
-  //         fontSize={"md"}
-  //         rounded={"full"}
-  //         onClick={handleLogout}
-  //         bg={"blue.400"}
-  //         color={"white"}
-  //         boxShadow={
-  //           "0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)"
-  //         }
-  //         _hover={{
-  //           bg: "blue.500",
-  //         }}
-  //         _focus={{
-  //           bg: "blue.500",
-  //         }}
-  //       >
-  //         Log Out
-  //       </Button>
-  //     </Stack>
-  //   </Box>
-  // </Center>
-  // ) : !bool ? (
+  
 }
 
 export default LoginRightCompo;
