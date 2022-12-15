@@ -4,27 +4,39 @@ import {
   Button,
   Center,
   Heading,
+  Image,
   Stack,
   Text,
 } from "@chakra-ui/react";
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { GoogleLogout } from "react-google-login";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
+import { loginAction } from "../../store/MainAuth/AuthActions";
+const clientid = import.meta.env.VITE_CLIENT_ID;
 function Profile() {
+  const [bool, setbool] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const {
     data: { _id, imageURL, firstName, email },
   } = useSelector((store) => store.auth);
-  const handleLogout = async () => {
-    try {
-      localStorage.removeItem("email");
-
-      window.location.reload();
-    } catch (error) {
-      console.log(error);
-    }
+  const logout = async () => {
+    localStorage.removeItem("lol");
+    window.location.reload();
+    toast({
+      title: "Logout successfull",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    });
+    setbool(!bool);
+    navigate("/login");
   };
+  useEffect(() => {
+    dispatch(loginAction());
+  }, [bool]);
+
   const handleMail = () => {
     window.location.href = "mailto:deysubham999@gmail.com";
   };
@@ -54,6 +66,7 @@ function Profile() {
               right: 3,
             }}
           />
+
           <Heading fontSize={"2xl"} fontFamily={"body"}>
             {firstName}
           </Heading>
@@ -107,7 +120,6 @@ function Profile() {
               flex={1}
               fontSize={"md"}
               rounded={"full"}
-              onClick={handleLogout}
               bg={"#32AEB0"}
               color={"white"}
               boxShadow={
@@ -120,7 +132,19 @@ function Profile() {
                 bg: "blue.500",
               }}
             >
-              Log Out
+              <GoogleLogout
+                render={(renderProps) => (
+                  <button
+                    onClick={renderProps.onClick}
+                    disabled={renderProps.disabled}
+                  >
+                    <Text>Logout</Text>
+                  </button>
+                )}
+                clientId={clientid}
+                buttonText="Logout"
+                onLogoutSuccess={logout}
+              />
             </Button>
           </Stack>
         </Box>

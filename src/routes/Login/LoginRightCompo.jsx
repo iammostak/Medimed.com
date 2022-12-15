@@ -33,17 +33,18 @@ import { loginAction } from "../../store/MainAuth/AuthActions";
 import { useDispatch, useSelector } from "react-redux";
 import { gapi } from "gapi-script";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 function LoginRightCompo() {
   const [otp, setotp] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { setupRecaptcha } = useUserAuth();
   const [phnumber, setphnumber] = useState("+91");
-
+  const navigate = useNavigate();
   const [result, setresult] = useState();
 
   const [redisbool, setredisbool] = useState(false);
   const [loading, setloading] = useState(false);
-  const { data } = useSelector((store) => store.auth);
+
   const dispatch = useDispatch();
   const toast = useToast();
   const getOtp = async () => {
@@ -64,11 +65,32 @@ function LoginRightCompo() {
 
   const verifyOtp = async () => {
     setloading(true);
-    console.log("confirm");
+
     try {
       let data = await result.confirm(otp);
-      onClose();
-      setloading(false);
+      const {
+        user: { phoneNumber },
+      } = data;
+
+      let res = await axios.post("http://localhost:8080/getViaPhonenumber", {
+        phnumber: phoneNumber,
+      });
+      if (res.status === 200) {
+        onClose();
+        setloading(false);
+        const {
+          data: { email },
+        } = res;
+        localStorage.setItem("lol", email);
+        setredisbool(!redisbool);
+        toast({
+          title: "Login successfull",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+        navigate("/profile");
+      }
     } catch (error) {
       console.log(error.message);
     }
@@ -103,13 +125,14 @@ function LoginRightCompo() {
       localStorage.setItem("lol", email);
 
       setredisbool(!redisbool);
-      // setbool(!bool);
+
       toast({
         title: "Login successfull",
         status: "success",
         duration: 3000,
         isClosable: true,
       });
+      navigate("/profile");
     } catch (error) {
       toast({
         title: `${error.message}`,
@@ -123,14 +146,7 @@ function LoginRightCompo() {
   const onFailure = async (res) => {
     console.log(res);
   };
-  // const check = async () => {
-  //   try {
-  //     let res = await
-  //     console.log("res:", res);
-  //   } catch (error) {
-  //     console.log(res);
-  //   }
-  // };
+
   const onsubmit = () => {
     getOtp().then(() => onOpen());
   };
@@ -206,7 +222,7 @@ function LoginRightCompo() {
                   bg={"#24AEB1"}
                   onClick={() => verifyOtp()}
                 >
-                  GET OTP
+                  Verify
                 </Button>
               </ModalFooter>
             </ModalContent>
