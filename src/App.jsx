@@ -1,5 +1,5 @@
-import { Container, Image } from "@chakra-ui/react";
-import axios from "axios";
+import { Container } from "@chakra-ui/react";
+
 import "./App.css";
 import Footer from "./components/Footer/Footer";
 import Navbar from "./components/Navbar/Navbar";

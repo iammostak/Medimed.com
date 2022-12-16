@@ -85,12 +85,9 @@ export default function SingleProduct() {
       success: false,
     });
     try {
-      let d = await axios.post(
-        "https://medimedcom-backend-production.up.railway.app/carts/create",
-        {
-          productId: id,
-        }
-      );
+      let d = await axios.post("http://localhost:8080/carts/create", {
+        productId: id,
+      });
       // console.log(d)
       cartBtnSetState({
         ...cartBtnState,

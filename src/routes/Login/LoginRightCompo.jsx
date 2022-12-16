@@ -25,7 +25,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
 import { FaFacebookSquare } from "react-icons/fa";
-import RightConditionRightCompo from "./RightCompoRightCondition";
+
 import { useUserAuth } from "./Context";
 const clientid = import.meta.env.VITE_CLIENT_ID;
 
@@ -72,9 +72,12 @@ function LoginRightCompo() {
         user: { phoneNumber },
       } = data;
 
-      let res = await axios.post("http://localhost:8080/auth/getViaPhonenumber", {
-        phnumber: phoneNumber,
-      });
+      let res = await axios.post(
+        "http://localhost:8080/auth/getViaPhonenumber",
+        {
+          phnumber: phoneNumber,
+        }
+      );
       if (res.status === 200) {
         onClose();
         setloading(false);
@@ -95,44 +98,48 @@ function LoginRightCompo() {
       console.log(error.message);
     }
   };
-  useEffect(() => {
-    // function start() {
-    //   gapi.client.init({
-    //     clientid: clientid,
-    //     scope: "",
-    //   });
-    // }
-    // gapi.load("client:auth2", start);
-  });
+  // useEffect(() => {
+  //   // function start() {
+  //   //   gapi.client.init({
+  //   //     clientid: clientid,
+  //   //     scope: "",
+  //   //   });
+  //   // }
+  //   // gapi.load("client:auth2", start);
+  // });
 
   // const googleAuth = async () => {
   //   // setredisbool(true);
   //   window.open("http://localhost:4000/auth/google", "_self");
   // };
-
+  // npm i react-google-login --force
   const onSuccess = async (res) => {
+    console.log("res:", res);
     const { givenName, familyName, email, imageUrl } = res.profileObj;
 
     try {
-      const res = await axios.post("http://localhost:8080/auth/postUserViaForm", {
-        firstName: givenName,
-        lastName: familyName,
-        email: email,
-        imageURL: imageUrl,
-      });
+      const res = await axios.post(
+        "http://localhost:8080/auth/postUserViaForm",
+        {
+          firstName: givenName,
+          lastName: familyName,
+          email: email,
+          imageURL: imageUrl,
+        }
+      );
 
       console.log("res:", res);
       localStorage.setItem("lol", email);
 
-      setredisbool(!redisbool);
-
+      
       toast({
         title: "Login successfull",
         status: "success",
         duration: 3000,
         isClosable: true,
       });
-      navigate("/profile");
+      setredisbool(!redisbool);
+      // navigate("/profile");
     } catch (error) {
       toast({
         title: `${error.message}`,
@@ -270,12 +277,9 @@ function LoginRightCompo() {
             </Button>
           </Flex>
         </Flex>
-      
       </Box>
     </>
   );
-
-  
 }
 
 export default LoginRightCompo;

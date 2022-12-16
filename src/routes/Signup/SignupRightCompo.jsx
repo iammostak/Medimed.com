@@ -67,7 +67,7 @@ function SignupRightCompo() {
         "http://localhost:8080/auth/postUserViaForm",
         formData
       );
-      setresponse(res);
+      // setresponse(res);
       localStorage.setItem("lol", email);
       toast({
         title: `Signup Successfull`,
@@ -75,6 +75,7 @@ function SignupRightCompo() {
         duration: 3000,
         isClosable: true,
       });
+      dispatch(loginAction());
       navigate("/");
     } catch (e) {
       toast({

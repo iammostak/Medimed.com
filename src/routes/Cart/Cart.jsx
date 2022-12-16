@@ -23,6 +23,7 @@ const getCartData = async (id) => {
 };
 function Cart() {
   const userData = useSelector((store) => store.auth);
+  // console.log('userData:', userData)
   const [cartData, setCartData] = useState([]);
   const toast = useToast();
   const {
