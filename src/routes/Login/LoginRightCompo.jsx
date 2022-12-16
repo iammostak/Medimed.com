@@ -23,7 +23,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { GoogleLogin, GoogleLogout } from "react-google-login";
+
 import { FaFacebookSquare } from "react-icons/fa";
 
 import { useUserAuth } from "./Context";
@@ -31,20 +31,20 @@ const clientid = import.meta.env.VITE_CLIENT_ID;
 
 import { loginAction } from "../../store/MainAuth/AuthActions";
 import { useDispatch, useSelector } from "react-redux";
-import { gapi } from "gapi-script";
+
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 function LoginRightCompo() {
   const [otp, setotp] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { setupRecaptcha } = useUserAuth();
+  const { setupRecaptcha, googleSignIn, logOut, user } = useUserAuth();
+
   const [phnumber, setphnumber] = useState("+91");
   const navigate = useNavigate();
   const [result, setresult] = useState();
-
   const [redisbool, setredisbool] = useState(false);
   const [loading, setloading] = useState(false);
-
   const dispatch = useDispatch();
   const toast = useToast();
   const getOtp = async () => {
@@ -86,73 +86,64 @@ function LoginRightCompo() {
         } = res;
         localStorage.setItem("lol", email);
         setredisbool(!redisbool);
+        dispatch(loginAction());
         toast({
           title: "Login successfull",
           status: "success",
           duration: 3000,
           isClosable: true,
         });
-        navigate("/profile");
+        navigate("/");
       }
     } catch (error) {
-      console.log(error.message);
-    }
-  };
-  // useEffect(() => {
-  //   // function start() {
-  //   //   gapi.client.init({
-  //   //     clientid: clientid,
-  //   //     scope: "",
-  //   //   });
-  //   // }
-  //   // gapi.load("client:auth2", start);
-  // });
-
-  // const googleAuth = async () => {
-  //   // setredisbool(true);
-  //   window.open("http://localhost:4000/auth/google", "_self");
-  // };
-  // npm i react-google-login --force
-  const onSuccess = async (res) => {
-    console.log("res:", res);
-    const { givenName, familyName, email, imageUrl } = res.profileObj;
-
-    try {
-      const res = await axios.post(
-        "http://localhost:8080/auth/postUserViaForm",
-        {
-          firstName: givenName,
-          lastName: familyName,
-          email: email,
-          imageURL: imageUrl,
-        }
-      );
-
-      console.log("res:", res);
-      localStorage.setItem("lol", email);
-
-      
       toast({
-        title: "Login successfull",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
-      setredisbool(!redisbool);
-      // navigate("/profile");
-    } catch (error) {
-      toast({
-        title: `${error.message}`,
+        title: `Wrong OTP`,
+        description: "If you dont have an account please proceed to Sign up",
         status: "error",
         duration: 3000,
         isClosable: true,
       });
+      onClose();
+      setloading(false);
     }
   };
 
-  const onFailure = async (res) => {
-    console.log(res);
+  const onSuccess = async (res) => {
+    console.log("res:", res);
+    // const { displayName, email, photoUrl } = res.profileObj
+    // const [firstName, lastName] = displayName.trim().split(" ");
+    // try {
+    //   const res = await axios.post("http://localhost:8080/auth/google", {
+    //     firstName: firstName,
+    //     lastName: lastName,
+    //     email: email,
+    //     imageURL: photoUrl,
+    //   });
+
+    //   localStorage.setItem("lol", email);
+    //   toast({
+    //     title: "Login successfull",
+    //     status: "success",
+    //     duration: 3000,
+    //     isClosable: true,
+    //   });
+    //   dispatch(loginAction());
+    //   navigate("/");
+    // } catch (error) {
+    //   toast({
+    //     title: `${error.message}`,
+    //     status: "error",
+    //     duration: 3000,
+    //     isClosable: true,
+    //   });
+    // }
   };
+  // const handleGoogleSignIn = async () => {
+  //   await googleSignIn();
+  //   await onSuccess();
+  // };
+
+  
 
   const onsubmit = () => {
     getOtp().then(() => onOpen());
@@ -164,9 +155,9 @@ function LoginRightCompo() {
           direction={"column"}
           align="start"
           p={["2", "5", "6", "8"]}
-          gap={"5"}
+          gap={"4"}
         >
-          <Heading size={"md"}>Sign In/Sign Up</Heading>
+          <Heading size={"md"}>Login</Heading>
           <Text align={"start"}>
             Sign up or Sign in to access your, special offers health tips and
             more{" "}
@@ -197,6 +188,14 @@ function LoginRightCompo() {
           >
             GET OTP
           </Button>
+          <Center w={"100%"} fontWeight={"medium"}>
+            <Text align={"center"}>
+              Dont have an Account?{" "}
+              <span style={{ color: "blue" }}>
+                <Link to={"/signup"}> Create an Account</Link>
+              </span>
+            </Text>
+          </Center>
           <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
             <ModalContent>
@@ -235,32 +234,22 @@ function LoginRightCompo() {
             </ModalContent>
           </Modal>
           <Flex gap={"20"} width={"100%"} justify={"space-between"}>
-            <GoogleLogin
-              clientId={clientid}
-              render={(renderProps) => (
-                <Button
-                  size={"md"}
-                  bg={"white"}
-                  border={"1px solid grey"}
-                  w={"50%"}
-                  color={"#767676"}
-                  fontWeight={"bold"}
-                  onClick={renderProps.onClick}
-                  disabled={renderProps.disabled}
-                >
-                  <Image
-                    mr={"2.5"}
-                    h={"6"}
-                    src="https://i.ibb.co/yPYCXhz/googel.png"
-                  ></Image>
-                  <Text>Login</Text>
-                </Button>
-              )}
-              buttonText="Google"
-              onSuccess={onSuccess}
-              onFailure={onFailure}
-              isSignedIn={false}
-            />
+            <Button
+              // onClick={handleGoogleSignIn}
+              size={"md"}
+              bg={"white"}
+              border={"1px solid grey"}
+              w={"50%"}
+              color={"#767676"}
+              fontWeight={"bold"}
+            >
+              <Image
+                mr={"2.5"}
+                h={"6"}
+                src="https://i.ibb.co/yPYCXhz/googel.png"
+              ></Image>
+              <Text>Login</Text>
+            </Button>
 
             <Button
               size={"md"}

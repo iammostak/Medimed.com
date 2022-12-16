@@ -33,23 +33,20 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginAction } from "../../store/MainAuth/AuthActions";
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { GoogleLogout } from "react-google-login";
 
 function Navbar() {
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch();
-  const [name, setName] = useState("Pablo Escobar");
+
   const {
     data: { firstName, imageURL },
   } = useSelector((store) => store.auth);
 
   useEffect(() => {
     dispatch(loginAction());
-   
   }, []);
-  const logout = async () => {
+  const handleLogout = async () => {
     console.log("logout");
     localStorage.removeItem("lol");
     window.location.reload();
@@ -144,23 +141,11 @@ function Navbar() {
                       Profile
                     </Button>
                     <Button
-                      // onClick={handleLogout}
+                      onClick={handleLogout}
                       variant={"none"}
                       bg={"#24AEB1"}
                     >
-                      <GoogleLogout
-                        render={(renderProps) => (
-                          <button
-                            onClick={renderProps.onClick}
-                            disabled={renderProps.disabled}
-                          >
-                           <Text>Logout</Text> 
-                          </button>
-                        )}
-                        clientId={clientid}
-                        buttonText="Logout"
-                        onLogoutSuccess={logout}
-                      />
+                      Logout
                     </Button>
                   </VStack>
                 ) : (

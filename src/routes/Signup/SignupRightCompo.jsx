@@ -18,6 +18,7 @@ import {
   ModalCloseButton,
   useDisclosure,
   useToast,
+  Center,
 } from "@chakra-ui/react";
 
 import React, { useEffect, useState } from "react";
@@ -26,7 +27,7 @@ import axios from "axios";
 import { loginAction } from "../../store/MainAuth/AuthActions";
 import { useDispatch, useSelector } from "react-redux";
 import { useUserAuth } from "../Login/Context";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import PhoneInput from "react-phone-number-input";
 
 function SignupRightCompo() {
@@ -67,20 +68,18 @@ function SignupRightCompo() {
         "http://localhost:8080/auth/postUserViaForm",
         formData
       );
-      // setresponse(res);
-      localStorage.setItem("lol", email);
+
       toast({
-        title: `Signup Successfull`,
+        title: `Signup Successfull Please Login`,
         status: "success",
         duration: 3000,
         isClosable: true,
       });
-      dispatch(loginAction());
-      navigate("/");
+      navigate("/login");
     } catch (e) {
       toast({
-        title: `${e.message}`,
-        status: "error",
+        title: `User Already Exists please try Logging in again`,
+        status: "warning",
         duration: 3000,
         isClosable: true,
       });
@@ -95,6 +94,7 @@ function SignupRightCompo() {
       <Flex
         direction={"column"}
         align="start"
+        fontWeight={"medium"}
         p={["4", "5", "6", "8"]}
         gap={"3"}
       >
@@ -130,6 +130,14 @@ function SignupRightCompo() {
           onChange={handleChange}
           placeholder="Enter your Last Name"
         ></Input>
+        <Center w={"100%"} fontWeight={"normal"}>
+          <Text align={"center"}>
+            Already have an Account?{" "}
+            <span style={{ color: "blue" }}>
+              <Link to={"/login"}> Login</Link>
+            </span>
+          </Text>
+        </Center>
         <Button
           onClick={handleSubmit}
           color={"white"}
