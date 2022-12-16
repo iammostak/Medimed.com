@@ -9,7 +9,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { GoogleLogout } from "react-google-login";
+
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { loginAction } from "../../store/MainAuth/AuthActions";
@@ -132,19 +132,7 @@ function Profile() {
                 bg: "blue.500",
               }}
             >
-              <GoogleLogout
-                render={(renderProps) => (
-                  <button
-                    onClick={renderProps.onClick}
-                    disabled={renderProps.disabled}
-                  >
-                    <Text>Logout</Text>
-                  </button>
-                )}
-                clientId={clientid}
-                buttonText="Logout"
-                onLogoutSuccess={logout}
-              />
+              Logout
             </Button>
           </Stack>
         </Box>

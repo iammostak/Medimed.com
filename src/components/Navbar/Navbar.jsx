@@ -38,7 +38,7 @@ function Navbar() {
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch();
-
+  const [text, settext] = useState("");
   const {
     data: { firstName, imageURL },
   } = useSelector((store) => store.auth);
@@ -51,6 +51,27 @@ function Navbar() {
     localStorage.removeItem("lol");
     window.location.reload();
   };
+  const getData = async () => {
+    const response = await axios.get(
+      "https://medimed-backend.up.railway.app/search",
+
+      {
+        params: {
+          title: text,
+        },
+      }
+    );
+    const { data } = response;
+    console.log("data:", data);
+
+    // setresult(data);
+  };
+  useEffect(() => {
+    if (!text) {
+      // setresult([]);
+    }
+    getData();
+  }, [text]);
   return (
     <Flex
       bg={"#32aeb0"}
@@ -79,6 +100,9 @@ function Navbar() {
       >
         <InputLeftAddon children={<InputLeftChild />} bg={"white"} />
         <Input
+          onChange={(e) => {
+            return settext(e.target.value);
+          }}
           type="text"
           placeholder="Search for medicine & wellness products..."
           fontSize={"sm"}

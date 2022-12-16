@@ -8,36 +8,77 @@ import {
   Select,
   useDisclosure,
   Flex,
+  useToast,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
+import useRazorpay from "react-razorpay";
 
 const Payment = () => {
+  const Razorpay = useRazorpay();
+  const [totalAmount, settotalAmount] = useState("");
+  const [discountAmount, setdiscountAmount] = useState("");
+  const prop = useSelector((store) => store.auth);
+  const toast = useToast();
+  const navigate = useNavigate();
+
+  const handleAmount = async (rupess) => {
+    const { data } = await axios.post("http://localhost:8080/order", {
+      amount: rupess,
+    });
+
+    const options = {
+      key: "rzp_test_fKqaOka3L8s0hG", //Enter the Key ID generated from the Dashboard
+      amount: rupess * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+      currency: "INR",
+      description: "Test Transaction",
+      image:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBkFPrfEVTY2M5rSCFmBKH1GhpF3_A2UNZqXrDZ_zpe4HCsmzCD2y_OZvvCtndJD3yvfQ&usqp=CAU",
+      order_id: data.order, //This is a sample Order ID. Pass the `id` obtained in the response of createOrder().
+      handler: function (response) {
+        toast({
+          description: response.razorpay_payment_id,
+          status: "success",
+        });
+        toast({
+          description: response.razorpay_order_id,
+          status: "success",
+        });
+        toast({
+          description: response.razorpay_signature,
+          status: "success",
+        });
+      },
+      prefill: {
+        name: prop.data.firstName,
+        email: prop.data.email,
+      },
+
+      theme: {
+        color: "#3399cc",
+      },
+    };
+    const rzp1 = new Razorpay(options);
+
+    rzp1.open();
+    navigate("/");
+  };
   const { discount, price, total } = useSelector(
     (store) => store.paymentState.payload
   );
-  const prop = useSelector((store) => store.paymentState);
 
   const [flag, setFlag] = useState(false);
   const [check, setCheck] = useState(false);
-  console.log(check);
 
-  let PaymentData = JSON.parse(localStorage.getItem("Price")) || "";
-  let DiscountPrice = JSON.parse(localStorage.getItem("DiscountPrice")) || "";
-  const navigate = useNavigate();
+
+
   useEffect(() => {
-    console.log(price);
+    settotalAmount(total);
+    setdiscountAmount(discount);
   }, [discount, price, total]);
 
-  const handleSuccess = () => {
-    // BasicUsage() ;
-    alert(
-      ">>>> Link has been sent to your Registered Mobile No. <<<<             >>>> Confirm the Payment & Proceed <<<<"
-    );
-    navigate("/success");
-  };
   return (
     <>
       <Box
@@ -270,7 +311,7 @@ const Payment = () => {
                             bg={"#24AEB1"}
                             color={"white"}
                           >
-                            PAY Rs {DiscountPrice}
+                            PAY Rs {discountAmount}
                           </Button>
                         )}
                       </Box>
@@ -550,7 +591,7 @@ const Payment = () => {
                 display={"flex"}
               >
                 <Text>Total Amount*</Text>
-                <Text>Rs,{total}</Text>
+                <Text>Rs,{totalAmount}</Text>
               </Box>
               <Box
                 bg={"#F3F8EC"}
@@ -580,17 +621,10 @@ const Payment = () => {
                 </Box>
 
                 <Box>
-                  <Link to="/">
-                    {" "}
-                    <Button
-                      onClick={() => {
-                        alert("Payment Succesfull");
-                      }}
-                      size={"lg"}
-                    >
-                      PROCEED
-                    </Button>{" "}
-                  </Link>
+                  {" "}
+                  <Button onClick={() => handleAmount(total)} size={"lg"}>
+                    PROCEED
+                  </Button>{" "}
                 </Box>
               </Box>
             </Box>

@@ -28,7 +28,7 @@ import { loginAction } from "../../store/MainAuth/AuthActions";
 import { useDispatch, useSelector } from "react-redux";
 import { useUserAuth } from "../Login/Context";
 import { Link, useNavigate } from "react-router-dom";
-import PhoneInput from "react-phone-number-input";
+
 
 function SignupRightCompo() {
   const toast = useToast();
